@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="changeloghist">
+        <item>v.0.0.0 制作中</item>
+        <item>v.0.0.1 内部测试</item>
+    </string-array>
+
+    <string-array name="dialoglist1">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="resList">
+        <item> 480p</item>
+        <item> 720p</item>
+        <item>1080p</item>
+    </string-array>
+
+    <string-array name="vidRecCfgList">
+        <item>Resolution</item>
+    </string-array>
+</resources>
