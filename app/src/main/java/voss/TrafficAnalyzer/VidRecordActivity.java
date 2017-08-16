@@ -103,7 +103,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private Camera.AutoFocusCallback mAutoFocusCallback=null;
     private SurfaceHolder mSurfaceHolder;
     private MediaRecorder mRecorder;
-    private Button NoteSigLitBtn,NotePriSigBtn, NoteNStSigBtn, NotePedWayBtn, NoteCameraBtn;
+    private Button Note1Btn,Note2Btn, Note3Btn, Note4Btn, Note5Btn;
     private List<Camera.Size> videoSizeList;
     private Chronometer nChronometer;
     private long exitTime;
@@ -134,16 +134,23 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         CfgBtn = (ImageButton) findViewById(R.id.cfgBtn);
         MenuBtn = (ImageButton) findViewById(R.id.menuBtn);
         nCameraView =  (SurfaceView)findViewById(R.id.cameraView);
-        NoteSigLitBtn = (Button) findViewById(R.id.noteSigLitBtn);
-        NotePriSigBtn = (Button) findViewById(R.id.notePriSigBtn);
-        NoteNStSigBtn = (Button) findViewById(R.id.noteNStSigBtn);
-        NotePedWayBtn = (Button) findViewById(R.id.notePedWayBtn);
-        NoteCameraBtn = (Button) findViewById(R.id.noteCameraBtn);
+        Note1Btn = (Button) findViewById(R.id.note1Btn);
+        Note2Btn = (Button) findViewById(R.id.note2Btn);
+        Note3Btn = (Button) findViewById(R.id.note3Btn);
+        Note4Btn = (Button) findViewById(R.id.note4Btn);
+        Note5Btn = (Button) findViewById(R.id.note5Btn);
         nChronometer = (Chronometer) findViewById(R.id.chronometer);
         dirText = (TextView) findViewById(R.id.dirText);
         spdText = (TextView) findViewById(R.id.spdText);
-
+//1:标线 2:标志 3:设施
         Dialog1List = getResources().getStringArray(R.array.dialoglist1);
+        Dialog2List = getResources().getStringArray(R.array.dialoglist2);
+        Dialog3List = getResources().getStringArray(R.array.dialoglist3);
+        Dialog4List = getResources().getStringArray(R.array.dialoglist4);
+        Dialog5List = getResources().getStringArray(R.array.dialoglist5);
+
+
+
 
 
         mSurfaceHolder = nCameraView.getHolder();
@@ -213,73 +220,177 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         }
 
 // 1 信号灯，2 让行，3 禁停，4 行人，5 摄像头
-        NoteSigLitBtn.setOnClickListener(new View.OnClickListener() {
+        Note1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialog1B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                Dialog1B.setSingleChoiceItems(Dialog1List, 0, new DialogInterface.OnClickListener() {
+                if (Started && !Noted) {
+                    Dialog1B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+                    Dialog1B.setSingleChoiceItems(Dialog1List, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tmpNote = which;
+                        }
+                    });
+                    Dialog1B.setCancelable(true);
+                    Dialog1B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note = 10 + tmpNote;
+                            Noted = true;
+                            Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog1List[tmpNote], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Dialog1B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    android.app.AlertDialog tmpDialog = Dialog1B.create();
+                    tmpDialog.show();
+                } else if (!Started){
+                    Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        Note2Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Started && !Noted) {
+                    Dialog2B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+                    Dialog2B.setSingleChoiceItems(Dialog2List, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tmpNote = which;
+                        }
+                    });
+                    Dialog2B.setCancelable(true);
+                    Dialog2B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note = 20 + tmpNote;
+                            Noted = true;
+                            Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog2List[tmpNote], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Dialog2B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    android.app.AlertDialog tmpDialog = Dialog2B.create();
+                    tmpDialog.show();
+                } else if (!Started){
+                    Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        Note3Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Started && !Noted) {
+                    Dialog3B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+                    Dialog3B.setSingleChoiceItems(Dialog3List, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tmpNote = which;
+                        }
+                    });
+                    Dialog3B.setCancelable(true);
+                    Dialog3B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note = 20 + tmpNote;
+                            Noted = true;
+                            Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog3List[tmpNote], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Dialog3B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    android.app.AlertDialog tmpDialog = Dialog3B.create();
+                    tmpDialog.show();
+                } else if (!Started){
+                    Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //// TODO: 2017/8/16 2 more buttons to customize
+        /*
+        Note4Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (Started && !Noted) {
+                Dialog4B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+                Dialog4B.setSingleChoiceItems(Dialog4List, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tmpNote = which;
                     }
                 });
-                Dialog1B.setCancelable(true);
-                Dialog1B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                Dialog4B.setCancelable(true);
+                Dialog4B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Note = 10 + tmpNote;
+                        Note = 20 + tmpNote;
                         Noted = true;
-                        Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog1List[tmpNote], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog4List[tmpNote], Toast.LENGTH_SHORT).show();
                     }
                 });
-                Dialog1B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                Dialog4B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
                     }
                 });
-                android.app.AlertDialog tmpDialog = Dialog1B.create();
+                android.app.AlertDialog tmpDialog = Dialog4B.create();
                 tmpDialog.show();
+            } else if (!Started){
+                Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
+            }
             }
         });
-        NotePriSigBtn.setOnClickListener(new View.OnClickListener() {
+        Note5Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Noted) {
-                    Note = 2;
-                    Noted = true;
+                if (Started && !Noted) {
+                    Dialog5B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+                    Dialog5B.setSingleChoiceItems(Dialog5List, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tmpNote = which;
+                        }
+                    });
+                    Dialog5B.setCancelable(true);
+                    Dialog5B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Note = 20 + tmpNote;
+                            Noted = true;
+                            Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog5List[tmpNote], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Dialog5B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    android.app.AlertDialog tmpDialog = Dialog5B.create();
+                    tmpDialog.show();
+                } else if (!Started){
+                    Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        NoteNStSigBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Noted) {
-                    Note = 3;
-                    Noted = true;
-                }
-            }
-        });
-        NotePedWayBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Noted) {
-                    Note = 4;
-                    Noted = true;
-                }
-            }
-        });
-        NoteCameraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Noted) {
-                    Note = 5;
-                    Noted = true;
-                }
-            }
-        });
-
+*/
 
         MenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -551,38 +662,13 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         nTrace = new TraceOverlay(aMap, locList);
 
         if (Noted) {
-            markerOptions = new MarkerOptions().position(latLng).draggable(false);
-            switch (Note){
-                case 1:
-                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(),android.R.drawable.presence_online)));
-
-                    break;
-                case 2:
-                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(),android.R.drawable.ic_media_pause)));
-
-                    break;
-                case 3:
-                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(),android.R.drawable.ic_delete)));
-
-                    break;
-                case 4:
-                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(),android.R.drawable.ic_menu_myplaces)));
-
-                    break;
-                case 5:
-                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(),android.R.drawable.ic_menu_camera)));
-
-                    break;
-            }
-            marker = aMap.addMarker(markerOptions);
+           placePoint();
         }
 
     }
+
+
+
 
     private void writeLog(){
         Time = TimeForm.format(new java.util.Date());
@@ -833,5 +919,102 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                 break;
         }
 
+    }
+
+    private void placePoint() {
+        markerOptions = new MarkerOptions().position(latLng).draggable(false);
+        switch (Note){
+            case 10:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s10)));
+
+                break;
+            case 11:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s11)));
+
+                break;
+            case 12:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s12)));
+
+                break;
+            case 13:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s13)));
+
+                break;
+            case 14:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s14)));
+
+                break;
+            case 15:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s15)));
+
+                break;
+            case 20:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s20)));
+
+                break;
+            case 21:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s21)));
+
+                break;
+            case 22:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s22)));
+
+                break;
+            case 23:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s23)));
+
+                break;
+            case 24:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s24)));
+
+                break;
+            case 25:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s25)));
+
+                break;
+            case 30:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s30)));
+
+                break;
+            case 31:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s31)));
+
+                break;
+            case 32:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s32)));
+
+                break;
+            case 33:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s33)));
+
+                break;
+            case 34:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s34)));
+
+                break;
+            case 35:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s35)));
+
+                break;
+        }
+        marker = aMap.addMarker(markerOptions);
     }
 }

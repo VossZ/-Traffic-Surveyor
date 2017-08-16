@@ -67,7 +67,7 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <!-- 1 信号灯，2 让行，3 禁停，4 行人，5 摄像头-->
+            <!-- 1:标线 2:标志 3:设施-->
 
             <TableLayout
                 android:layout_height="match_parent"
@@ -86,22 +86,22 @@
                         app:srcCompat="@android:drawable/ic_notification_overlay" />
 
                     <Button
-                        android:id="@+id/noteSigLitBtn"
+                        android:id="@+id/note1Btn"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="信号灯"/>
+                        android:text="标线"/>
 
                     <Button
-                        android:id="@+id/notePriSigBtn"
+                        android:id="@+id/note2Btn"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="让行标志"/>
+                        android:text="标志"/>
 
                     <Button
-                        android:id="@+id/noteNStSigBtn"
+                        android:id="@+id/note3Btn"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="禁停标志"/>
+                        android:text="设施"/>
                 </TableRow>
 
                 <TableRow
@@ -117,16 +117,16 @@
                         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
                     <Button
-                        android:id="@+id/notePedWayBtn"
+                        android:id="@+id/note4Btn"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="人行横道"/>
+                        android:text="未启用"/>
 
                     <Button
-                        android:id="@+id/noteCameraBtn"
+                        android:id="@+id/note5Btn"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="摄像头"/>
+                        android:text="未启用"/>
 
                     <ImageButton
                         android:id="@+id/menuBtn"

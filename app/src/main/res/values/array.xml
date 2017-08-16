@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="changeloghist">
-        <item>v.0.0.0 制作中</item>
-        <item>v.0.0.1 内部测试</item>
+        <item>v.0.1.0  测试发布</item>
+
+    </string-array>
+<!--标线-->
+    <string-array name="dialoglist1">
+        <item>人行横道</item>
+        <item>汇流标线</item>
+        <item>导流带</item>
+        <item>禁停标线</item>
+        <item>让行标线</item>
+        <item>减速提示</item>
+    </string-array>
+<!--标志-->
+    <string-array name="dialoglist2">
+        <item>限速标志</item>
+        <item>禁停标志</item>
+        <item>场所标志</item>
+        <item>禁止转向</item>
+        <item>指路标志</item>
+        <item>停车场</item>
+    </string-array>
+<!--设施-->
+    <string-array name="dialoglist3">
+        <item>信号灯</item>
+        <item>摄像机</item>
+        <item>警示灯</item>
+        <item>车道灯</item>
+        <item>信息屏</item>
+        <item>测速站</item>
+    </string-array>
+<!---->
+    <string-array name="dialoglist4">
+    </string-array>
+<!---->
+    <string-array name="dialoglist5">
     </string-array>
 
-    <string-array name="dialoglist1">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-    </string-array>
 
     <string-array name="resList">
         <item> 480p</item>

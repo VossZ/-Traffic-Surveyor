@@ -363,29 +363,94 @@ public class ReplayActivity extends AppCompatActivity {
                 int Note = tmpPTObj.getInt("Type");
                 RepMarkerOption = new MarkerOptions().position(markerLoc).draggable(false);
                 switch (Note){
-                    case 1:
+                    case 10:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                .decodeResource(getResources(),android.R.drawable.presence_online)));
+                                .decodeResource(getResources(),R.drawable.s10)));
 
                         break;
-                    case 2:
+                    case 11:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                .decodeResource(getResources(),android.R.drawable.ic_media_pause)));
+                                .decodeResource(getResources(),R.drawable.s11)));
 
                         break;
-                    case 3:
+                    case 12:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                .decodeResource(getResources(),android.R.drawable.ic_delete)));
+                                .decodeResource(getResources(),R.drawable.s12)));
 
                         break;
-                    case 4:
+                    case 13:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                .decodeResource(getResources(),android.R.drawable.ic_menu_myplaces)));
+                                .decodeResource(getResources(),R.drawable.s13)));
 
                         break;
-                    case 5:
+                    case 14:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                .decodeResource(getResources(),android.R.drawable.ic_menu_camera)));
+                                .decodeResource(getResources(),R.drawable.s14)));
+
+                        break;
+                    case 15:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s15)));
+
+                        break;
+                    case 20:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s20)));
+
+                        break;
+                    case 21:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s21)));
+
+                        break;
+                    case 22:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s22)));
+
+                        break;
+                    case 23:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s23)));
+
+                        break;
+                    case 24:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s24)));
+
+                        break;
+                    case 25:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s25)));
+
+                        break;
+                    case 30:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s30)));
+
+                        break;
+                    case 31:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s31)));
+
+                        break;
+                    case 32:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s32)));
+
+                        break;
+                    case 33:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s33)));
+
+                        break;
+                    case 34:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s34)));
+
+                        break;
+                    case 35:
+                        RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                                .decodeResource(getResources(),R.drawable.s35)));
 
                         break;
                 }
