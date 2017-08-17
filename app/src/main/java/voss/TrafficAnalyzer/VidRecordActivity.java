@@ -1016,5 +1016,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                 break;
         }
         marker = aMap.addMarker(markerOptions);
+        Note = 0;
     }
 }
