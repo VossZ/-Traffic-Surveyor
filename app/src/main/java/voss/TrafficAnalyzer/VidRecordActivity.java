@@ -303,7 +303,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                     Dialog3B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Note = 20 + tmpNote;
+                            Note = 30 + tmpNote;
                             Noted = true;
                             Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog3List[tmpNote], Toast.LENGTH_SHORT).show();
                         }
