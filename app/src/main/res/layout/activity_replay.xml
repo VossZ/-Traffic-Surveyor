@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="voss.TrafficAnalyzer.ReplayActivity">
+    tools:context="voss.TrafficAnalyzer.VidReplayActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:background="@color/black">
 
             <LinearLayout
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -28,88 +29,25 @@
 
                 <VideoView
                     android:id="@+id/repVidView"
-                    android:layout_width="100dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight="1" />
+
             </LinearLayout>
 
-            <TableLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <TableRow
+                <SeekBar
+                    android:id="@+id/seekBar"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" >
-
-                    <Button
-                        android:id="@+id/repStartBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="回放"
-                        android:textSize="25dp"
-                        android:layout_weight="1"
-                        android:drawableTint="#00FF00"
-                        android:drawableStart="@android:drawable/ic_media_play"  />
-
-                    <Button
-                        android:id="@+id/repMenuBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="浏览"
-                        android:textSize="25dp"
-                        android:drawableStart="@android:drawable/ic_menu_gallery"
-                        android:drawableTint="#00A0EE"
-                        android:layout_weight="1" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" >
-
-                    <Button
-                        android:id="@+id/repPauseBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textSize="25dp"
-                        android:layout_weight="1"/>
-
-                    <Button
-                        android:id="@+id/repReturnBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="返回"
-                        android:textSize="25dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@android:drawable/ic_menu_revert"
-                        android:drawableTint="#7D26CD" />
-                </TableRow>
-            </TableLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <com.amap.api.maps.TextureMapView
                 android:id="@+id/repMap"
@@ -119,17 +57,96 @@
 
             </com.amap.api.maps.TextureMapView>
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/repChart"
-                android:layout_height="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/leaf">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1">
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/repCenterBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+                <ImageButton
+                    android:id="@+id/repStartBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_media_play"/>
+
+                <ImageButton
+                    android:id="@+id/repMenuBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@android:drawable/sym_contact_card" />
+
+                <ImageButton
+                    android:id="@+id/repReturnBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_revert"/>
 
 
-            </com.github.mikephil.charting.charts.LineChart>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:backgroundTint="@color/black">
+
+                <TextView
+                    android:id="@+id/textRepBearing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="方向"
+                    android:textColor="@color/cyan"
+                    android:background="@color/black"/>
 
 
+                <TextView
+                    android:id="@+id/textRepSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="速度"
+                    android:gravity="right"
+                    android:textColor="@color/cyan"
+                    android:background="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/repChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.github.mikephil.charting.charts.LineChart>
+
+
+            </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

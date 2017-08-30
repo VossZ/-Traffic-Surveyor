@@ -84,7 +84,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private JSONArray jsAry, pointsAry;
     private FileOutputStream FOS;
     private boolean Started, Noted, mStartedFlg;
-    private ImageButton StartBtn, CfgBtn, MenuBtn;
+    private ImageButton StartBtn, CfgBtn, InfoBtn;
     private double Lat, Lon, Dist;
     private float Spd, Brn;
     private String Time, dirDisp, spdDisp;
@@ -103,7 +103,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private Camera.AutoFocusCallback mAutoFocusCallback=null;
     private SurfaceHolder mSurfaceHolder;
     private MediaRecorder mRecorder;
-    private Button Note1Btn,Note2Btn, Note3Btn, Note4Btn, Note5Btn;
+    private Button Note1Btn,Note2Btn, Note3Btn, Note4Btn, Note5Btn, MenuBtn;
     private List<Camera.Size> videoSizeList;
     private Chronometer nChronometer;
     private long exitTime;
@@ -114,7 +114,11 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private String[] Dialog1List, Dialog2List, Dialog3List, Dialog4List, Dialog5List, CFGItems;
     private CamcorderProfile vidQuality;
 
-    private SimpleDateFormat TimeForm = new SimpleDateFormat("yy_MM_dd_HH_mm_ss");
+
+    private android.app.AlertDialog ChangeLogDialog, ChangeLogHistDialog, infoDialog;
+    private android.app.AlertDialog.Builder CLDBuilder, CLHDBuilder, infoDialogBuilder;
+
+    private SimpleDateFormat TimeForm = new SimpleDateFormat("yyyy年MM月dd日_HH时mm分ss秒");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,23 +136,24 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         }
         StartBtn = (ImageButton) findViewById(R.id.startBtn);
         CfgBtn = (ImageButton) findViewById(R.id.cfgBtn);
-        MenuBtn = (ImageButton) findViewById(R.id.menuBtn);
-        nCameraView =  (SurfaceView)findViewById(R.id.cameraView);
+        InfoBtn = (ImageButton)findViewById(R.id.infoBtn);
+        MenuBtn = (Button) findViewById(R.id.menuBtn);
         Note1Btn = (Button) findViewById(R.id.note1Btn);
         Note2Btn = (Button) findViewById(R.id.note2Btn);
         Note3Btn = (Button) findViewById(R.id.note3Btn);
         Note4Btn = (Button) findViewById(R.id.note4Btn);
-        Note5Btn = (Button) findViewById(R.id.note5Btn);
+        //Note5Btn = (Button) findViewById(R.id.note5Btn);
         nChronometer = (Chronometer) findViewById(R.id.chronometer);
         dirText = (TextView) findViewById(R.id.dirText);
         spdText = (TextView) findViewById(R.id.spdText);
-//1:标线 2:标志 3:设施
+//1:标线 2:标志 3:设施 4:特殊
         Dialog1List = getResources().getStringArray(R.array.dialoglist1);
         Dialog2List = getResources().getStringArray(R.array.dialoglist2);
         Dialog3List = getResources().getStringArray(R.array.dialoglist3);
         Dialog4List = getResources().getStringArray(R.array.dialoglist4);
-        Dialog5List = getResources().getStringArray(R.array.dialoglist5);
+        //Dialog5List = getResources().getStringArray(R.array.dialoglist5);
 
+        nCameraView =  (SurfaceView)findViewById(R.id.cameraView);
 
 
 
@@ -170,6 +175,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
 
         readCFG();
+        prepareInfo();
 
         mAutoFocusCallback=new Camera.AutoFocusCallback() {
             @Override
@@ -226,7 +232,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
                 if (Started && !Noted) {
                     Dialog1B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                    Dialog1B.setSingleChoiceItems(Dialog1List, 0, new DialogInterface.OnClickListener() {
+                    Dialog1B.setSingleChoiceItems(Dialog1List, -1, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tmpNote = which;
@@ -260,7 +266,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
                 if (Started && !Noted) {
                     Dialog2B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                    Dialog2B.setSingleChoiceItems(Dialog2List, 0, new DialogInterface.OnClickListener() {
+                    Dialog2B.setSingleChoiceItems(Dialog2List, -1, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tmpNote = which;
@@ -293,7 +299,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             public void onClick(View v) {
                 if (Started && !Noted) {
                     Dialog3B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                    Dialog3B.setSingleChoiceItems(Dialog3List, 0, new DialogInterface.OnClickListener() {
+                    Dialog3B.setSingleChoiceItems(Dialog3List, -1, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tmpNote = which;
@@ -321,15 +327,14 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                 }
             }
         });
-        //// TODO: 2017/8/16 2 more buttons to customize
-        /*
+
         Note4Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (Started && !Noted) {
                 Dialog4B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                Dialog4B.setSingleChoiceItems(Dialog4List, 0, new DialogInterface.OnClickListener() {
+                Dialog4B.setSingleChoiceItems(Dialog4List, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tmpNote = which;
@@ -357,12 +362,14 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             }
             }
         });
+
+        /*
         Note5Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Started && !Noted) {
                     Dialog5B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                    Dialog5B.setSingleChoiceItems(Dialog5List, 0, new DialogInterface.OnClickListener() {
+                    Dialog5B.setSingleChoiceItems(Dialog5List, -1, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tmpNote = which;
@@ -397,7 +404,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             public void onClick(View v) {
                 if (!Started){
                     Intent intent = new Intent();
-                    intent.setClass(VidRecordActivity.this, ReplayActivity.class);
+                    intent.setClass(VidRecordActivity.this, VidReplayActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(VidRecordActivity.this, "正在录制！", Toast.LENGTH_SHORT).show();
@@ -413,6 +420,23 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                     Intent intent = new Intent();
                     intent.setClass(VidRecordActivity.this, VidRecCfgActivity.class);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(VidRecordActivity.this, "正在录制！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        InfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!Started) {
+                    //check prepareInfo
+                    ChangeLogHistDialog = CLHDBuilder.create();
+                    ChangeLogDialog = CLDBuilder.create();
+                    infoDialog = infoDialogBuilder.create();
+
+                    infoDialog.show();
                 } else {
                     Toast.makeText(VidRecordActivity.this, "正在录制！", Toast.LENGTH_SHORT).show();
                 }
@@ -774,7 +798,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                     StartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_notification_overlay));
                 } else {
                     startAction();
-                    StartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_menu_close_clear_cancel));
+                    StartBtn.setImageDrawable(getDrawable(R.drawable.stop));
                 }
             }
         });
@@ -797,14 +821,13 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         if (Started) {
             Toast.makeText(this, "正在录制！", Toast.LENGTH_SHORT).show();
         } else if ((System.currentTimeMillis() - exitTime) > 2000) {
-            // ToastUtil.makeToastInBottom("再按一次退出应用", MainMyselfActivity);
             Toast.makeText(this, "再按一次返回主菜单", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
             return;
         } else {
 
             Intent intent = new Intent();
-            intent.setClass(VidRecordActivity.this, MainMenuActivity.class);
+            intent.setClass(VidRecordActivity.this, SplashActivity.class);
             startActivity(intent);
         }
 
@@ -1014,7 +1037,90 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                         .decodeResource(getResources(),R.drawable.s35)));
 
                 break;
+            case 40:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s40)));
+
+                break;
+            case 41:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s41)));
+
+                break;
+            case 42:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s42)));
+
+                break;
+            case 43:
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(getResources(),R.drawable.s43)));
+
+                break;
+
         }
         marker = aMap.addMarker(markerOptions);
+    }
+
+    public void prepareInfo(){
+        CLHDBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+        CLHDBuilder.setTitle("历史记录");
+        CLHDBuilder.setItems(getResources().getStringArray(R.array.changeloghist), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        CLHDBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        CLDBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+        CLDBuilder.setTitle("更新内容");
+        CLDBuilder.setMessage(getResources().getString(R.string.changelognew));
+        CLDBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CLDBuilder.setPositiveButton("历史更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ChangeLogHistDialog.show();
+            }
+        });
+
+        infoDialogBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
+        infoDialogBuilder.setTitle("说明");
+        infoDialogBuilder.setCancelable(true);
+        infoDialogBuilder.setItems(getResources().getStringArray(R.array.info), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        infoDialogBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
+            }
+        });
+        infoDialogBuilder.setPositiveButton("更新内容", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ChangeLogDialog.show();
+            }
+        });
+
+        infoDialogBuilder.setCancelable(true);
+        CLDBuilder.setCancelable(true);
+        CLHDBuilder.setCancelable(true);
+
+
+
     }
 }

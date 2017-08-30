@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -34,6 +36,7 @@ import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
+import com.autonavi.rtbt.RMileageInfo;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -50,37 +53,38 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ReplayActivity extends AppCompatActivity {
+public class VidReplayActivity extends AppCompatActivity {
     private File mLogFile, mVideoFile;
     private TextureMapView RepMapView;
     private AMap RepMap;
     private VideoView RepVidView;
     private Polyline RepTraceLine;
-    private Marker RepMarker, PosMarker1, PosMarker2;
+    private Marker RepMarker, PosMarker;
     private MarkerOptions RepMarkerOption, PosMarkerOption;
-    private Button RepStartBtn;
-    private Button RepMenuBtn;
-    private Button RepPauseBtn;
-    private Button RepReturnBtn;
-    private boolean Playing, Paused, FileReadiness, PosMarkerStat;
+    private ImageButton RepStartBtn;
+    private ImageButton RepMenuBtn;
+    private ImageButton RepReturnBtn;
+    private ImageButton RepCenterBtn;
+    private boolean Playing, Paused, FileReadiness, ChartPointed, validNote;
     private List<LatLng> locList;
     private JSONObject jsOBJ;
     private JSONArray lineARY, pointsARY;
     private LatLng markerLoc;
     private SeekBar mSeekBar;
     private StringBuilder stringBuilder;
-    private String tempString;
-    private int VidDur, TargetPos, PtsCount, currentPts;
+    private String tempString, spdDisp, dirDisp;
+    private int VidDur, TargetPos, PtsCount, currentPts, infoPos;
     private Timer RepTimer, RepLocTimer;
     private Handler RepTimerHandler, RepLocTimerHandler;
     private LineChart RepChart;
-    private List<Entry> ChartEntries;
-    private LineDataSet ChartDataSet;
+    private List<Entry> ChartEntries, markerEntries;
+    private LineDataSet ChartDataSet, markerDataSet;
     private LineData ChartData;
     private SmoothMoveMarker RepMoveMarker;
     public CameraUpdate RepCameraUpdate;
@@ -90,6 +94,8 @@ public class ReplayActivity extends AppCompatActivity {
     private List<TraceLocation> nTraceList;
     private List<LatLng> markerlist;
     private PowerManager.WakeLock wakeLock;
+    private TextView brnText, spdText;
+    private double rBearing, rSpeed;
 
 
 
@@ -98,14 +104,16 @@ public class ReplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_replay);
 
-        RepStartBtn = (Button)findViewById(R.id.repStartBtn);
-        RepMenuBtn = (Button)findViewById(R.id.repMenuBtn);
-        RepPauseBtn = (Button)findViewById(R.id.repPauseBtn);
-        RepReturnBtn = (Button)findViewById(R.id.repReturnBtn);
+        RepStartBtn = (ImageButton) findViewById(R.id.repStartBtn);
+        RepMenuBtn = (ImageButton) findViewById(R.id.repMenuBtn);
+        RepReturnBtn = (ImageButton) findViewById(R.id.repReturnBtn);
+        RepCenterBtn = (ImageButton)findViewById(R.id.repCenterBtn);
         RepMapView = (TextureMapView)findViewById(R.id.repMap);
         RepVidView = (VideoView) findViewById(R.id.repVidView);
         mSeekBar = (SeekBar)findViewById(R.id.seekBar);
         RepChart = (LineChart)findViewById(R.id.repChart);
+        brnText = (TextView)findViewById(R.id.textRepBearing);
+        spdText = (TextView)findViewById(R.id.textRepSpeed);
 
         mSeekBar.setMax(1000);
 
@@ -120,9 +128,9 @@ public class ReplayActivity extends AppCompatActivity {
             initPerm();
             unpackJSON(mLogFile);
             drawMap();
-            drawChart();
             markerTiming();
         }
+        drawChart();
 
 
         if (FileReadiness) {
@@ -130,39 +138,35 @@ public class ReplayActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!Playing) {
-                        Playing = true;
                         if (Paused) {
                             Paused = false;
-                            RepVidView.resume();
-                        } else {
                             RepVidView.start();
+                            //RepVidView.resume();
+                        } else {
+                            VidDur = RepVidView.getDuration();
+                            RepVidView.start();
+                            initTimer();
                         }
+                        Playing = true;
+
                         RepVidView.requestFocus();
-
-
-                        VidDur = RepVidView.getDuration();
-                        Toast.makeText(ReplayActivity.this, "" + VidDur, Toast.LENGTH_SHORT).show();
-
-                        initTimer();
-
-
-                        RepStartBtn.setText("暂停");
-                        RepStartBtn.setCompoundDrawablesRelative(getDrawable(android.R.drawable.ic_media_pause),null,null,null);
-                    } else if (Playing) {
+                        RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
+                    } else if (Playing){
                         Playing = false;
                         RepVidView.pause();
                         Paused = true;
 
-                        RepStartBtn.setText("回放");
-                        RepStartBtn.setCompoundDrawablesRelative(getDrawable(android.R.drawable.ic_media_play),null,null,null);
+                        RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
+
                     }
                 }
             });
 
-            RepPauseBtn.setOnClickListener(new View.OnClickListener() {
+            RepCenterBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    RepMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                            new CameraPosition(locList.get(currentPts),14,0,0)));
                 }
             });
         }
@@ -171,10 +175,10 @@ public class ReplayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!Playing){
                     Intent intent = new Intent();
-                    intent.setClass(ReplayActivity.this, BrowseActivity.class);
+                    intent.setClass(VidReplayActivity.this, BrowseActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ReplayActivity.this, "正在播放！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VidReplayActivity.this, "正在播放！", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -187,10 +191,10 @@ public class ReplayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!Playing){
                     Intent intent = new Intent();
-                    intent.setClass(ReplayActivity.this, VidRecordActivity.class);
+                    intent.setClass(VidReplayActivity.this, VidRecordActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ReplayActivity.this, "正在播放！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VidReplayActivity.this, "正在播放！", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -208,9 +212,15 @@ public class ReplayActivity extends AppCompatActivity {
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
 
-                    RepVidView.seekTo(TargetPos);
-                    initTimer();
-
+                    if (mSeekBar.getProgress() != 1000) {
+                        RepVidView.seekTo(TargetPos);
+                        initTimer();
+                    } else {
+                        RepVidView.seekTo(TargetPos - 1);
+                        RepVidView.pause();
+                        RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
+                        Playing = false;
+                    }
                 }
             });
         }
@@ -233,10 +243,10 @@ public class ReplayActivity extends AppCompatActivity {
                             } else {
                                 RepVidView.pause();
                                 Playing = false;
-                                Toast.makeText(ReplayActivity.this, "回放完毕！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(VidReplayActivity.this, "回放完毕！", Toast.LENGTH_SHORT).show();
 
-                                RepStartBtn.setCompoundDrawablesRelative(getDrawable(android.R.drawable.ic_media_play),null,null,null);
-                                RepStartBtn.setText("回放");
+                                RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
+
 
                                 RepVidView.seekTo(1);
                                 mSeekBar.setProgress(0);
@@ -331,7 +341,7 @@ public class ReplayActivity extends AppCompatActivity {
         nTraceClient.queryProcessedTrace(1, nTraceList, LBSTraceClient.TYPE_AMAP, new TraceListener() {
             @Override
             public void onRequestFailed(int i, String s) {
-                Toast.makeText(ReplayActivity.this, "轨迹纠正失败，显示原始数据", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VidReplayActivity.this, "轨迹纠正失败，显示原始数据", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -341,10 +351,9 @@ public class ReplayActivity extends AppCompatActivity {
 
             @Override
             public void onFinished(int i, List<LatLng> list, int i1, int i2) {
-                Toast.makeText(ReplayActivity.this, "轨迹纠正成功，耗时：" + i2 +
+                Toast.makeText(VidReplayActivity.this, "轨迹纠正成功，耗时：" + i2 +
                         "ms，显示处理后轨迹", Toast.LENGTH_SHORT).show();
                 locList = list;
-                PosMarkerStat = true;
             }
         });
 
@@ -358,11 +367,15 @@ public class ReplayActivity extends AppCompatActivity {
 */
         for (int i = 0; i < pointsARY.length(); i++){
             try {
+                validNote = true;
                 JSONObject tmpPTObj = pointsARY.getJSONObject(i);
                 markerLoc = new LatLng(tmpPTObj.getDouble("Lat"), tmpPTObj.getDouble("Lon"));
                 int Note = tmpPTObj.getInt("Type");
                 RepMarkerOption = new MarkerOptions().position(markerLoc).draggable(false);
                 switch (Note){
+                    case 0:
+                        validNote = false;
+                        break;
                     case 10:
                         RepMarkerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                 .decodeResource(getResources(),R.drawable.s10)));
@@ -454,7 +467,9 @@ public class ReplayActivity extends AppCompatActivity {
 
                         break;
                 }
-                RepMarker = RepMap.addMarker(RepMarkerOption);
+                if (validNote) {
+                    RepMarker = RepMap.addMarker(RepMarkerOption);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -478,38 +493,62 @@ public class ReplayActivity extends AppCompatActivity {
                 RepLocTimerHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (PosMarkerStat) {
+                        if (Playing) {
                             if (currentPts != locList.size() * mSeekBar.getProgress() / 1000) {
                                 currentPts = locList.size() * mSeekBar.getProgress() / 1000;
 
-                                markerlist = new ArrayList<LatLng>();
-                                for (int i = currentPts; i < locList.size(); i++) {
-                                    markerlist.add(locList.get(i));
-                                }
 
-                            if (Playing) {
-
-                                if (RepMoveMarker != null) {
-                                    RepMoveMarker.destroy();
+                                if (PosMarker != null) {
+                                    PosMarker.remove();
                                 }
-                                RepMoveMarker = new SmoothMoveMarker(RepMap);
-                                if (markerlist != null && markerlist.size() >= 2) {
-                                    RepMoveMarker.setPoints(markerlist);
-                                    RepMoveMarker.setTotalDuration(VidDur / 1000 * (1 - mSeekBar.getProgress() / 1000));
-                                    RepMoveMarker.startSmoothMove();
-                                    RepCameraUpdate = RepCameraUpdateFactory.
-                                            newCameraPosition(new CameraPosition(markerlist.get(0), 15, 0, 0));
-                                    RepMap.animateCamera(RepCameraUpdate);
-                                }
+                                PosMarkerOption = new MarkerOptions().draggable(false).position(locList.get(currentPts));
+                                PosMarker = RepMap.addMarker(PosMarkerOption);
                             }
-                            } else if (RepMoveMarker != null && !Playing) {
-                                RepMoveMarker.stopMove();
-                            }
+                            dispInfo();
+                            drawChartMarker();
                         }
                     }
                 });
             }
         }, 0, 1000);
+    }
+
+    public void dispInfo(){
+        infoPos = lineARY.length() * mSeekBar.getProgress() / 1000 - 1;
+        JSONObject infoObj;
+        try {
+            infoObj = lineARY.getJSONObject(infoPos);
+            rBearing = infoObj.getDouble("Bearing");
+            rSpeed = infoObj.getDouble("Speed") * 3.6;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        DecimalFormat decimalFormat=new DecimalFormat("000.0");
+        spdDisp = "速度：" + decimalFormat.format(rSpeed) + "km/h";
+
+        dirDisp = "方向：";
+        if (rBearing == -1){
+            dirDisp += "未确定方向";
+        } else if (rBearing <= 22.5 || rBearing > 337.5) {
+            dirDisp += "正北";
+        } else if (rBearing > 22.5 && rBearing <= 67.5) {
+            dirDisp += "东北";
+        } else if (rBearing > 67.5 && rBearing <= 112.5){
+            dirDisp += "正东";
+        } else if (rBearing > 112.5 && rBearing <= 157.5){
+            dirDisp += "东南";
+        } else if (rBearing > 157.5 && rBearing <= 202.5){
+            dirDisp += "正南";
+        } else if (rBearing > 202.5 && rBearing <= 247.5){
+            dirDisp += "西南";
+        } else if (rBearing > 247.5 && rBearing <= 292.5){
+            dirDisp += "正西";
+        } else if (rBearing > 292.5 && rBearing <= 337.5){
+            dirDisp += "西北";
+        }
+
+        spdText.setText(spdDisp);
+        brnText.setText(dirDisp);
     }
 
     @Override
@@ -551,7 +590,7 @@ public class ReplayActivity extends AppCompatActivity {
                 && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED);
         if (!permitted) {
-            ActivityCompat.requestPermissions(ReplayActivity.this, new String[]{
+            ActivityCompat.requestPermissions(VidReplayActivity.this, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -564,27 +603,60 @@ public class ReplayActivity extends AppCompatActivity {
     }
 
     public void drawChart(){
-        RepChart.setDragDecelerationEnabled(false);
         ChartEntries = new ArrayList<Entry>();
-        for (int i = 0; i < PtsCount; i++){
-            try {
-                JSONObject tmpChtObj = lineARY.getJSONObject(i);
-                Entry tmpEntry = new Entry(tmpChtObj.getInt("ID"), (float) tmpChtObj.getDouble("Distance"));
-                ChartEntries.add(tmpEntry);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
+        if (FileReadiness) {
+            for (int i = 0; i < PtsCount; i++) {
+                try {
+                    JSONObject tmpChtObj = lineARY.getJSONObject(i);
+                    Entry tmpEntry = new Entry(tmpChtObj.getInt("ID"), (float) tmpChtObj.getDouble("Distance"));
+                    ChartEntries.add(tmpEntry);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            ChartEntries.add(new Entry(0,0));
+        }
         ChartDataSet = new LineDataSet(ChartEntries,"距离");
         ChartDataSet.setDrawCircles(false);
-        ChartDataSet.setDrawFilled(true);
+        ChartDataSet.setLineWidth(5);
         ChartData = new LineData(ChartDataSet);
         RepChart.setData(ChartData);
+        RepChart.setDragDecelerationEnabled(false);
         RepChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        RepChart.setBackgroundColor(getResources().getColor(R.color.leaf));
         RepChart.getAxisLeft().setAxisMinimum(0);
         RepChart.invalidate();
 
+    }
+
+    public void drawChartMarker(){
+        JSONObject tempObj;
+
+        if (ChartPointed) {
+            markerDataSet.removeLast();
+            ChartPointed = false;
+        }
+
+        markerEntries  = new ArrayList<Entry>();
+        try {
+            tempObj = lineARY.getJSONObject(infoPos);
+            markerEntries.add(new Entry(tempObj.getInt("ID"), (float) tempObj.getDouble("Distance")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        markerDataSet = new LineDataSet(markerEntries,"");
+        markerDataSet.setCircleRadius(9);
+        markerDataSet.setCircleColor(R.color.black);
+        ChartDataSet.setDrawCircles(false);
+
+        ChartData.addDataSet(markerDataSet);
+        ChartPointed = true;
+        markerDataSet.notifyDataSetChanged();
+        ChartData.notifyDataChanged();
+        RepChart.notifyDataSetChanged();
+        RepChart.invalidate();
 
     }
 
@@ -594,7 +666,7 @@ public class ReplayActivity extends AppCompatActivity {
             Toast.makeText(this, "正在回放！", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent();
-            intent.setClass(ReplayActivity.this, VidRecordActivity.class);
+            intent.setClass(VidReplayActivity.this, VidRecordActivity.class);
             startActivity(intent);
         }
     }

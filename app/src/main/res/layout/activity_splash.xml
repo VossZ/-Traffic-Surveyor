@@ -7,6 +7,7 @@
     tools:context="voss.TrafficAnalyzer.SplashActivity">
 
     <LinearLayout
+        android:id="@+id/splashFrame"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -22,16 +23,66 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textSize="50dp"
-                android:textColor="#000000"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/splash" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:text="交通调查仪"
+                    android:textColor="@color/cyan"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="25dp"
+                    android:textSize="50dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:text="Traffic Surveyor"
+                    android:textColor="@color/cyan"
+                    android:paddingTop="85dp"
+                    android:paddingEnd="25dp"
+                    android:textSize="35dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:text="记录行车轨迹\n分析控制效果"
+                    android:textColor="@color/cyan"
+                    android:textSize="20dp"
+                    android:paddingBottom="10dp"
+                    android:paddingStart="40dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="点击任意处进入"
+                    android:textColor="@color/leaf"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:paddingTop="40dp"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +107,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="made by VossZ"
+                    android:text="@string/dev"
                     android:textSize="20dp" />
 
                 <TextView

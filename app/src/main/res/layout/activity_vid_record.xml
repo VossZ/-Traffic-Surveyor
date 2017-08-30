@@ -72,7 +72,8 @@
             <TableLayout
                 android:layout_height="match_parent"
                 android:layout_width="100dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@color/leaf">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -82,26 +83,32 @@
                     <ImageButton
                         android:id="@+id/startBtn"
                         android:layout_height="match_parent"
+                        android:layout_width="80dp"
                         android:layout_weight="1"
                         app:srcCompat="@android:drawable/ic_notification_overlay" />
 
-                    <Button
-                        android:id="@+id/note1Btn"
+                    <ImageButton
+                        android:id="@+id/cfgBtn"
                         android:layout_height="match_parent"
+                        android:layout_width="80dp"
                         android:layout_weight="1"
-                        android:text="标线"/>
+                        android:tint="#8B6914"
+                        app:srcCompat="@android:drawable/ic_menu_preferences" />
+
+                    <ImageButton
+                        android:id="@+id/infoBtn"
+                        android:layout_height="match_parent"
+                        android:layout_width="80dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/ic_dialog_info" />
 
                     <Button
-                        android:id="@+id/note2Btn"
+                        android:id="@+id/menuBtn"
                         android:layout_height="match_parent"
+                        android:layout_width="80dp"
                         android:layout_weight="1"
-                        android:text="标志"/>
-
-                    <Button
-                        android:id="@+id/note3Btn"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="设施"/>
+                        android:text="回放"
+                        android:textColor="#303070" />
                 </TableRow>
 
                 <TableRow
@@ -109,31 +116,36 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/cfgBtn"
+                    <Button
+                        android:id="@+id/note1Btn"
                         android:layout_height="match_parent"
+                        android:layout_width="80dp"
                         android:layout_weight="1"
-                        android:tint="#8B6914"
-                        app:srcCompat="@android:drawable/ic_menu_preferences" />
+                        android:text="标线"/>
+
+                    <Button
+                        android:id="@+id/note2Btn"
+                        android:layout_height="match_parent"
+                        android:layout_width="80dp"
+                        android:layout_weight="1"
+                        android:text="标志"/>
+
+                    <Button
+                        android:id="@+id/note3Btn"
+                        android:layout_height="match_parent"
+                        android:layout_width="80dp"
+                        android:layout_weight="1"
+                        android:text="设施"/>
 
                     <Button
                         android:id="@+id/note4Btn"
                         android:layout_height="match_parent"
+                        android:layout_width="80dp"
                         android:layout_weight="1"
-                        android:text="未启用"/>
+                        android:text="特殊情况"/>
 
-                    <Button
-                        android:id="@+id/note5Btn"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="未启用"/>
 
-                    <ImageButton
-                        android:id="@+id/menuBtn"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tint="#7D26CD"
-                        app:srcCompat="@android:drawable/ic_dialog_dialer" />
+
                 </TableRow>
 
             </TableLayout>

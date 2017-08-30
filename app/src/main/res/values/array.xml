@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="changeloghist">
-        <item>v.0.1.0  测试发布</item>
+        <item>v.0.1.1 更新了标记图标与列表</item>
+        <item>v.0.1.0  测试版</item>
 
     </string-array>
 <!--标线-->
@@ -31,8 +32,12 @@
         <item>信息屏</item>
         <item>测速站</item>
     </string-array>
-<!---->
+<!--特殊情况-->
     <string-array name="dialoglist4">
+        <item>施工</item>
+        <item>事故</item>
+        <item>临时停车</item>
+        <item>交通管制</item>
     </string-array>
 <!---->
     <string-array name="dialoglist5">
@@ -47,5 +52,11 @@
 
     <string-array name="vidRecCfgList">
         <item>Resolution</item>
+    </string-array>
+
+    <string-array name="info">
+        <item>1.录制：录像键开始/停止录制，录制中可通过标记键在地图上进行标记</item>
+        <item>2.回放：浏览并打开记录文件，通过视频、图表、轨迹与标记进行初步分析</item>
+        <item>3.文件存储位置：本地存储或SD卡（由系统设置决定）下的/Surveyor目录</item>
     </string-array>
 </resources>

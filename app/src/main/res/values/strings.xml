@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">交通调查仪</string>
-    <string name="vercode">0.1.1</string>
-    <string name="changelognew">v.0.1.1 更新了标记图标与列表</string>
+    <string name="vercode">1.0.0</string>
+    <string name="changelognew">v1.0.0 公开测试版</string>
+    <string name="dev">made by VossZ</string>
 
 </resources>
