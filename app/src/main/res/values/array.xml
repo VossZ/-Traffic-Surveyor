@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="changeloghist">
+        <item>v.1.1.0 增加了更多标记类型</item>
+        <item>v.1.0.0 正式发布版</item>
         <item>v.0.1.1 更新了标记图标与列表</item>
         <item>v.0.1.0  测试版</item>
 
@@ -54,9 +56,44 @@
         <item>Resolution</item>
     </string-array>
 
-    <string-array name="info">
+    <string-array name="vidRecInfo">
         <item>1.录制：录像键开始/停止录制，录制中可通过标记键在地图上进行标记</item>
         <item>2.回放：浏览并打开记录文件，通过视频、图表、轨迹与标记进行初步分析</item>
         <item>3.文件存储位置：本地存储或SD卡（由系统设置决定）下的/Surveyor目录</item>
     </string-array>
+
+    <string-array name="intersecRecInfo">
+        <item>1.点击深色区域输入对应项（路口名为必填项）</item>
+        <item>2.点击计时器输入倒计时时长</item>
+        <item>3.按任意记录键开始倒计时</item>
+        <item>4.记录结束后可切换方向记录，或按“保存”键保存数据</item>
+        <item>5.文件存储位置：本地存储或SD卡（由系统设置决定）下的/Surveyor目录</item>
+    </string-array>
+
+    <string-array name="intersecDir">
+        <item>北</item>
+        <item>东</item>
+        <item>南</item>
+        <item>西</item>
+    </string-array>
+
+    <string-array name="intersecDirS">
+        <item>N</item>
+        <item>E</item>
+        <item>S</item>
+        <item>W</item>
+    </string-array>
+
+    <string-array name="fileTypes">
+        <item>全部</item>
+        <item>行进调查</item>
+        <item>路口调查</item>
+    </string-array>
+
+    <string-array name="filterExt">
+        <item>.json</item>
+        <item>.vlog.json</item>
+        <item>.ilog.json</item>
+    </string-array>
+
 </resources>

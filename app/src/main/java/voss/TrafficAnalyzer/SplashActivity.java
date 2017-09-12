@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SplashActivity.this, VidRecordActivity.class);
+                intent.setClass(SplashActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });
@@ -53,4 +53,9 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDestroy(){
+        finish();
+        super.onDestroy();
+    }
 }

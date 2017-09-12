@@ -8,14 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.Timer;
 
 public class MainMenuActivity extends AppCompatActivity {
-    private Button VidRecBtn, ChangeLogBtn;
+    private LinearLayout VidRecBtn, IntersecRecBtn, ChangeLogBtn, BrowseBtn;
     private long exitTime;
-    private boolean exit;
     private AlertDialog ChangeLogDialog, ChangeLogHistDialog;
     private AlertDialog.Builder CLDBuilder, CLHDBuilder;
 
@@ -25,10 +25,11 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        VidRecBtn = (Button)findViewById(R.id.vidRecBtn);
-        ChangeLogBtn = (Button)findViewById(R.id.changeLogBtn);
+        VidRecBtn = (LinearLayout)findViewById(R.id.vidRecBtn);
+        IntersecRecBtn = (LinearLayout)findViewById(R.id.intersecRecBtn);
+        ChangeLogBtn = (LinearLayout)findViewById(R.id.changeLogBtn);
+        BrowseBtn = (LinearLayout)findViewById(R.id.dataRepBtn);
 
-        exit = false;
 
         VidRecBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +37,26 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.setClass(MainMenuActivity.this, VidRecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        IntersecRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.setClass(MainMenuActivity.this, IntersecRecActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        BrowseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.setClass(MainMenuActivity.this, BrowseActivity.class);
                 startActivity(intent);
             }
         });
@@ -92,17 +113,8 @@ public class MainMenuActivity extends AppCompatActivity {
             exitTime = System.currentTimeMillis();
             return;
         } else {
-            exit = true;
             finish();
-        }
-    }
-
-    @Override
-    protected void onDestroy(){
-
-        super.onDestroy();
-        if (exit) {
-            System.exit(0);
+            this.onDestroy();
         }
     }
 }

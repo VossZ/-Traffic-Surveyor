@@ -7,5 +7,28 @@
     <color name="white">#FFFFFF</color>
     <color name="cyan">#DDFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="yellow">#FFFF00</color>
     <color name="leaf">#e6efa5</color>
+    <color name="darkLeaf">#c6cf95</color>
+    <color name="black_LightTrans">#40000000</color>
+    <color name="black_MidTrans">#88000000</color>
+    <color name="black_DarkTrans">#BF000000</color>
+    <color name="brightOrange">#F7931e</color>
+    <color name="azure">#00a99d</color>
+    <color name="purple">#FF00FF</color>
+    <color name="cirredmag">#e60033</color>
+    <color name="cirred">#e60012</color>
+    <color name="cirredorange">#ea6100</color>
+    <color name="cirgreenyellow">#8fc31f</color>
+    <color name="cirgreen">#22ac38</color>
+    <color name="cirgreendark">#009944</color>
+    <color name="cirbluegreen">#00a0c1</color>
+    <color name="cirblue">#00a0df</color>
+    <color name="cirbluedark">#0086e5</color>
+    <color name="cirpurpleblue">#601986</color>
+    <color name="cirpurple">#920783</color>
+    <color name="cirpurplered">#be0081</color>
+
 </resources>

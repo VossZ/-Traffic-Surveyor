@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="false"
@@ -32,6 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <service android:name="com.amap.api.location.APSService" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="351e88657f019b3be9b6379f3bb194b0" />
@@ -39,13 +41,13 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="landscape">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".VidRecordActivity"
             android:screenOrientation="landscape" />
@@ -60,7 +62,15 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".VidRecCfgActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".IntersecRecActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".IntersecReplayActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
     </application>
 
 </manifest>

@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -123,9 +122,11 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_vid_record);
 
-        if (Build.VERSION.SDK_INT >= 23) {initPerm();}
+        //if (Build.VERSION.SDK_INT >= 23) {initPerm();}
 
         nTimer = new Timer();
         nHandler = new Handler();
@@ -363,41 +364,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             }
         });
 
-        /*
-        Note5Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Started && !Noted) {
-                    Dialog5B = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-                    Dialog5B.setSingleChoiceItems(Dialog5List, -1, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            tmpNote = which;
-                        }
-                    });
-                    Dialog5B.setCancelable(true);
-                    Dialog5B.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Note = 20 + tmpNote;
-                            Noted = true;
-                            Toast.makeText(VidRecordActivity.this, "已标记为：" + Dialog5List[tmpNote], Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Dialog5B.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(VidRecordActivity.this, "取消标记", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    android.app.AlertDialog tmpDialog = Dialog5B.create();
-                    tmpDialog.show();
-                } else if (!Started){
-                    Toast.makeText(VidRecordActivity.this, "未开始录制", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-*/
+
 
         MenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,7 +416,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mMapView.onDestroy();
         File tempfile = new File(Folder + "/temp.mp4");
@@ -459,8 +425,8 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
         TimerHandler.removeCallbacks(Timer);
         releaseWakeLock();
-
-
+        finish();
+        super.onDestroy();
     }
     @Override
     protected void onResume() {
@@ -543,7 +509,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
             if (mRecorder == null) {
                 mRecorder = new MediaRecorder(); // Create MediaRecorder
-                Toast.makeText(VidRecordActivity.this, "!!!", Toast.LENGTH_SHORT).show();
             }
             try {
                 nCamera.unlock();
@@ -562,7 +527,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
                     Folder.mkdirs();
                     VideoFile = new File(Folder + "/temp.mp4");
-                    Toast.makeText(VidRecordActivity.this, VideoFile.toString(), Toast.LENGTH_LONG).show();
                     mRecorder.setOutputFile(VideoFile.toString());
                     mRecorder.prepare();
                     mRecorder.start();   // Recording is now started
@@ -600,7 +564,8 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             inputDialog.setText(Time);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("请输入文件名").setIcon(R.mipmap.ic_launcher).setView(inputDialog);
+            builder.setTitle("请输入文件名");
+            builder.setView(inputDialog);
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -728,7 +693,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             Folder.mkdirs();
         }
         FileName = new File(Folder + "/" + userFileName + ".vlog.json");
-        Toast.makeText(this, "Saved to " + FileName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "已保存为：" + FileName, Toast.LENGTH_SHORT).show();
         try {
             File file = VideoFile;
             VideoFile = new File(Folder + "/" + userFileName + ".vlog.mp4");
@@ -760,8 +725,10 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         if(nCamera != null) {
             try {
                 nParameters = nCamera.getParameters();
-                nParameters.setPreviewSize(1280, 720);
+                nParameters.setPreviewSize(960, 544);
                 nParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+
+
                 nCamera.setParameters(nParameters);
                 nCamera.setPreviewDisplay(mSurfaceHolder);
                 nCamera.startPreview();
@@ -820,22 +787,15 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     public void onBackPressed(){
         if (Started) {
             Toast.makeText(this, "正在录制！", Toast.LENGTH_SHORT).show();
-        } else if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(this, "再按一次返回主菜单", Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-            return;
         } else {
-
-            Intent intent = new Intent();
-            intent.setClass(VidRecordActivity.this, SplashActivity.class);
-            startActivity(intent);
+            super.onBackPressed();
         }
 
     }
 
     public void dispInfo(){
         float convertedSpd = Spd * 3.6f;
-        DecimalFormat decimalFormat=new DecimalFormat("000.0");
+        DecimalFormat decimalFormat=new DecimalFormat("000");
         spdDisp = "速度：" + decimalFormat.format(convertedSpd) + "km/h";
 
         dirDisp = Brn + "方向：";
@@ -866,7 +826,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
     public void acquireWakeLock()
     {
-        if (null == wakeLock)
+        if (wakeLock == null)
         {
             PowerManager pm = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE, "PostLocationService");
@@ -877,10 +837,9 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         }
     }
 
-    //释放设备电源锁
     public void releaseWakeLock()
     {
-        if (null != wakeLock)
+        if (wakeLock != null)
         {
             wakeLock.release();
             wakeLock = null;
@@ -1097,12 +1056,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         infoDialogBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
         infoDialogBuilder.setTitle("说明");
         infoDialogBuilder.setCancelable(true);
-        infoDialogBuilder.setItems(getResources().getStringArray(R.array.info), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
+        infoDialogBuilder.setItems(getResources().getStringArray(R.array.vidRecInfo), null);
         infoDialogBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

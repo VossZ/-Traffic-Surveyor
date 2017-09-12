@@ -1,20 +1,15 @@
 package voss.TrafficAnalyzer;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -36,7 +31,6 @@ import com.amap.api.trace.LBSTraceClient;
 import com.amap.api.trace.TraceListener;
 import com.amap.api.trace.TraceLocation;
 import com.amap.api.trace.TraceOverlay;
-import com.autonavi.rtbt.RMileageInfo;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -102,7 +96,7 @@ public class VidReplayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_replay);
+        setContentView(R.layout.activity_vid_replay);
 
         RepStartBtn = (ImageButton) findViewById(R.id.repStartBtn);
         RepMenuBtn = (ImageButton) findViewById(R.id.repMenuBtn);
@@ -125,7 +119,6 @@ public class VidReplayActivity extends AppCompatActivity {
 
         recvPath();
         if (FileReadiness) {
-            initPerm();
             unpackJSON(mLogFile);
             drawMap();
             markerTiming();
@@ -264,12 +257,10 @@ public class VidReplayActivity extends AppCompatActivity {
 
     public void recvPath(){
         try {
-
             Intent intent = getIntent();
             mLogFile = new File(intent.getStringExtra("LogPath"));
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "打开文件错误", Toast.LENGTH_SHORT).show();
             FileReadiness = false;
         }
 
@@ -282,7 +273,6 @@ public class VidReplayActivity extends AppCompatActivity {
             Log.e("file", mLogFile + "");
             Log.e("isThere", mLogFile.exists() + "");
         }
-
     }
 
     public void unpackJSON(File file){
@@ -553,13 +543,14 @@ public class VidReplayActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         RepMap.clear();
         if (RepTraceLine != null) {
             RepTraceLine.remove();
         }
         RepMapView.onDestroy();
         releaseWakeLock();
+        finish();
+        super.onDestroy();
     }
     @Override
     public void onPause() {
@@ -574,33 +565,6 @@ public class VidReplayActivity extends AppCompatActivity {
         acquireWakeLock();
     }
 
-
-    public void initPerm(){
-
-        boolean permitted = (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED);
-        if (!permitted) {
-            ActivityCompat.requestPermissions(VidReplayActivity.this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO
-            }, 101);
-        }
-    }
 
     public void drawChart(){
         ChartEntries = new ArrayList<Entry>();

@@ -17,8 +17,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    signingConfigs{
-        release{
+    signingConfigs {
+        release {
             storeFile file("C:\\Users\\Fly\\.android\\release.keystore")
             storePassword "1qazxcvbnm"
             keyAlias "andriod.keystore"

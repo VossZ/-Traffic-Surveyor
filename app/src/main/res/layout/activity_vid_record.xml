@@ -9,18 +9,26 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="8dp">
+
+        <com.amap.api.maps.TextureMapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </com.amap.api.maps.TextureMapView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -36,8 +44,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000000"
-                        android:textColor="#FFFFFF"
-                        android:text="方向" />
+                        android:text="方向"
+                        android:textColor="#FFFFFF" />
 
                     <Chronometer
                         android:id="@+id/chronometer"
@@ -55,9 +63,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#000000"
-                        android:textColor="#FFFFFF"
                         android:gravity="right"
-                        android:text="速度" />
+                        android:text="速度"
+                        android:textColor="#FFFFFF" />
                 </LinearLayout>
 
                 <SurfaceView
@@ -70,8 +78,8 @@
             <!-- 1:标线 2:标志 3:设施-->
 
             <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_width="100dp"
                 android:layout_weight="1"
                 android:background="@color/leaf">
 
@@ -82,30 +90,30 @@
 
                     <ImageButton
                         android:id="@+id/startBtn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:srcCompat="@android:drawable/ic_notification_overlay" />
 
                     <ImageButton
                         android:id="@+id/cfgBtn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:tint="#8B6914"
                         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
                     <ImageButton
                         android:id="@+id/infoBtn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:srcCompat="@android:drawable/ic_dialog_info" />
 
                     <Button
                         android:id="@+id/menuBtn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="回放"
                         android:textColor="#303070" />
@@ -118,32 +126,31 @@
 
                     <Button
                         android:id="@+id/note1Btn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="标线"/>
+                        android:text="标线" />
 
                     <Button
                         android:id="@+id/note2Btn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="标志"/>
+                        android:text="标志" />
 
                     <Button
                         android:id="@+id/note3Btn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="设施"/>
+                        android:text="设施" />
 
                     <Button
                         android:id="@+id/note4Btn"
-                        android:layout_height="match_parent"
                         android:layout_width="80dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="特殊情况"/>
-
+                        android:text="特殊情况" />
 
 
                 </TableRow>
@@ -151,14 +158,6 @@
             </TableLayout>
 
         </LinearLayout>
-
-        <com.amap.api.maps.TextureMapView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </com.amap.api.maps.TextureMapView>
 
     </LinearLayout>
 

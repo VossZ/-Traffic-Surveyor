@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">交通调查仪</string>
-    <string name="vercode">1.0.0</string>
-    <string name="changelognew">v1.0.0 公开测试版</string>
+    <string name="vercode">1.2.0</string>
+    <string name="changelognew">v1.2.0 加入了路口调查功能，重新制作了界面</string>
     <string name="dev">made by VossZ</string>
 
 </resources>
