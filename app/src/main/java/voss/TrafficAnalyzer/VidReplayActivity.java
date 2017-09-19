@@ -62,8 +62,7 @@ public class VidReplayActivity extends AppCompatActivity {
     private Marker RepMarker, PosMarker;
     private MarkerOptions RepMarkerOption, PosMarkerOption;
     private ImageButton RepStartBtn;
-    private ImageButton RepMenuBtn;
-    private ImageButton RepReturnBtn;
+    //private ImageButton RepMenuBtn;
     private ImageButton RepCenterBtn;
     private boolean Playing, Paused, FileReadiness, ChartPointed, validNote;
     private List<LatLng> locList;
@@ -99,8 +98,7 @@ public class VidReplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vid_replay);
 
         RepStartBtn = (ImageButton) findViewById(R.id.repStartBtn);
-        RepMenuBtn = (ImageButton) findViewById(R.id.repMenuBtn);
-        RepReturnBtn = (ImageButton) findViewById(R.id.repReturnBtn);
+        //RepMenuBtn = (ImageButton) findViewById(R.id.repMenuBtn);
         RepCenterBtn = (ImageButton)findViewById(R.id.repCenterBtn);
         RepMapView = (TextureMapView)findViewById(R.id.repMap);
         RepVidView = (VideoView) findViewById(R.id.repVidView);
@@ -163,7 +161,7 @@ public class VidReplayActivity extends AppCompatActivity {
                 }
             });
         }
-        RepMenuBtn.setOnClickListener(new View.OnClickListener() {
+        /*RepMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!Playing){
@@ -176,21 +174,9 @@ public class VidReplayActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
 
-        RepReturnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Playing){
-                    Intent intent = new Intent();
-                    intent.setClass(VidReplayActivity.this, VidRecordActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(VidReplayActivity.this, "正在播放！", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         if (FileReadiness) {
             mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -629,9 +615,8 @@ public class VidReplayActivity extends AppCompatActivity {
         if (Playing) {
             Toast.makeText(this, "正在回放！", Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent();
-            intent.setClass(VidReplayActivity.this, VidRecordActivity.class);
-            startActivity(intent);
+            finish();
+            super.onBackPressed();
         }
     }
 

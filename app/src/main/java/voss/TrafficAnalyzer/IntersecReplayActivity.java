@@ -44,7 +44,7 @@ public class IntersecReplayActivity extends AppCompatActivity {
 
     private File mLogFile;
     private boolean FileReadiness, hasN, hasE, hasS, hasW;
-    private LinearLayout tabIllu, tabDiag, frameIllu, frameDiag;
+    private LinearLayout tabIllu, tabDiag, tabTabl, frameIllu, frameDiag, frameTabl;
     private StringBuilder stringBuilder;
     private JSONObject jsOBJ, nObj, eObj, sObj, wObj, iObj;
     private int iNl, iNn, iNr, iEl, iEn, iEr, iSl, iSn, iSr, iWl, iWn, iWr,
@@ -53,7 +53,9 @@ public class IntersecReplayActivity extends AppCompatActivity {
             aSL0, aSL1, aSN0, aSN1, aSR0, aSR1, aWL0, aWL1, aWN0, aWN1, aWR0, aWR1;
     private TextView txtIN, txtINR, txtINN, txtINL, txtOW, txtIW, txtIWL, txtIWN, txtIWR,
             txtOS, txtON, txtIER, txtIEN, txtIEL, txtIE, txtOE, txtISL, txtISN, txtISR,
-            txtIS, txtIntName, txtIntDate;
+            txtIS, txtIntName, txtIntDate, tablINR, tablINN, tablINL, tablIN, tablON,
+            tablIER, tablIEN, tablIEL, tablIE, tablOE, tablISR, tablISN, tablISL, tablIS,
+            tablOS, tablIWR, tablIWN, tablIWL, tablIW, tablOW;
     private TextureMapView intMapView;
     private AMap intMap;
     private LatLng coord;
@@ -69,8 +71,10 @@ public class IntersecReplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intersec_replay);
 
         tabIllu = (LinearLayout)findViewById(R.id.tabIllu);
+        tabTabl = (LinearLayout)findViewById(R.id.tabTabl);
         tabDiag = (LinearLayout)findViewById(R.id.tabDiag);
         frameIllu = (LinearLayout)findViewById(R.id.frameIllu);
+        frameTabl = (LinearLayout)findViewById(R.id.frameTabl);
         frameDiag = (LinearLayout)findViewById(R.id.frameDiag);
         txtIN = (TextView)findViewById(R.id.txtIN);
         txtINR = (TextView)findViewById(R.id.txtINR);
@@ -94,6 +98,26 @@ public class IntersecReplayActivity extends AppCompatActivity {
         txtIS = (TextView)findViewById(R.id.txtIS);
         txtIntName = (TextView)findViewById(R.id.textIntName);
         txtIntDate = (TextView)findViewById(R.id.textIntDate);
+        tablINR = (TextView)findViewById(R.id.tablINR);
+        tablINN = (TextView)findViewById(R.id.tablINN);
+        tablINL = (TextView)findViewById(R.id.tablINL);
+        tablIN = (TextView)findViewById(R.id.tablIN);
+        tablON = (TextView)findViewById(R.id.tablON);
+        tablIER = (TextView)findViewById(R.id.tablIER);
+        tablIEN = (TextView)findViewById(R.id.tablIEN);
+        tablIEL = (TextView)findViewById(R.id.tablIEL);
+        tablIE = (TextView)findViewById(R.id.tablIE);
+        tablOE = (TextView)findViewById(R.id.tablOE);
+        tablISR = (TextView)findViewById(R.id.tablISR);
+        tablISN = (TextView)findViewById(R.id.tablISN);
+        tablISL = (TextView)findViewById(R.id.tablISL);
+        tablIS = (TextView)findViewById(R.id.tablIS);
+        tablOS = (TextView)findViewById(R.id.tablOS);
+        tablIWR = (TextView)findViewById(R.id.tablIWR);
+        tablIWN = (TextView)findViewById(R.id.tablIWN);
+        tablIWL = (TextView)findViewById(R.id.tablIWL);
+        tablIW = (TextView)findViewById(R.id.tablIW);
+        tablOW = (TextView)findViewById(R.id.tablOW);
         intMapView = (TextureMapView)findViewById(R.id.intersecMap);
         intersecChart = (LineChart)findViewById(R.id.intersecChart);
 
@@ -114,9 +138,11 @@ public class IntersecReplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tabIllu.setBackgroundColor(getResources().getColor(R.color.leaf));
+                tabTabl.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
                 tabDiag.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
                 frameIllu.setVisibility(View.VISIBLE);
                 frameDiag.setVisibility(View.GONE);
+                frameTabl.setVisibility(View.GONE);
 
             }
         });
@@ -125,12 +151,25 @@ public class IntersecReplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tabDiag.setBackgroundColor(getResources().getColor(R.color.leaf));
+                tabTabl.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
                 tabIllu.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
                 frameDiag.setVisibility(View.VISIBLE);
                 frameIllu.setVisibility(View.GONE);
+                frameTabl.setVisibility(View.GONE);
             }
         });
 
+        tabTabl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabTabl.setBackgroundColor(getResources().getColor(R.color.leaf));
+                tabIllu.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
+                tabDiag.setBackgroundColor(getResources().getColor(R.color.darkLeaf));
+                frameTabl.setVisibility(View.VISIBLE);
+                frameDiag.setVisibility(View.GONE);
+                frameIllu.setVisibility(View.GONE);
+            }
+        });
     }
 
 
@@ -301,6 +340,27 @@ public class IntersecReplayActivity extends AppCompatActivity {
         txtISN.setText(iSn + "");
         txtISR.setText(iSr + "");
         txtIS.setText(iS + "");
+
+        tablINL.setText(iNl + "");
+        tablINN.setText(iNn + "");
+        tablINR.setText(iNr + "");
+        tablIN.setText(iN + "");
+        tablON.setText(oN + "");
+        tablIEL.setText(iEl + "");
+        tablIEN.setText(iEn + "");
+        tablIER.setText(iEr + "");
+        tablIE.setText(iE + "");
+        tablOE.setText(oE + "");
+        tablISL.setText(iSl + "");
+        tablISN.setText(iSn + "");
+        tablISR.setText(iSr + "");
+        tablIS.setText(iS + "");
+        tablOS.setText(oS + "");
+        tablIWL.setText(iWl + "");
+        tablIWN.setText(iWn + "");
+        tablIWR.setText(iWr + "");
+        tablIW.setText(iW + "");
+        tablOW.setText(oW + "");
 
         txtIntDate.setText(date);
         txtIntName.setText(name);

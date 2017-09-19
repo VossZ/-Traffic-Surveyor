@@ -11,7 +11,7 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="0dp">
 
         <com.amap.api.maps.TextureMapView
             android:id="@+id/map"
@@ -29,7 +29,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -79,13 +79,13 @@
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@color/leaf">
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <ImageButton
@@ -95,34 +95,12 @@
                         android:layout_weight="1"
                         app:srcCompat="@android:drawable/ic_notification_overlay" />
 
-                    <ImageButton
-                        android:id="@+id/cfgBtn"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tint="#8B6914"
-                        app:srcCompat="@android:drawable/ic_menu_preferences" />
-
-                    <ImageButton
-                        android:id="@+id/infoBtn"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_dialog_info" />
-
                     <Button
-                        android:id="@+id/menuBtn"
+                        android:id="@+id/note2Btn"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="回放"
-                        android:textColor="#303070" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                        android:text="标志" />
 
                     <Button
                         android:id="@+id/note1Btn"
@@ -131,12 +109,30 @@
                         android:layout_weight="1"
                         android:text="标线" />
 
-                    <Button
-                        android:id="@+id/note2Btn"
+                    <ImageButton
+                        android:id="@+id/cfgBtn"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="标志" />
+                        android:tint="#8B6914"
+                        android:visibility="gone"
+                        app:srcCompat="@android:drawable/ic_menu_preferences" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/infoBtn"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/ic_dialog_info"
+                        tools:layout_editor_absoluteX="-553dp"
+                        tools:layout_editor_absoluteY="8dp" />
 
                     <Button
                         android:id="@+id/note3Btn"

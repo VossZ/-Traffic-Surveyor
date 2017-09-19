@@ -15,7 +15,7 @@
             android:layout_width="185sp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/background_half">
+            android:background="@color/cyan">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,6 @@
                         android:id="@+id/textIntName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:text="路口名："
                         android:textSize="15sp"
                         android:maxLines="1"
@@ -48,7 +47,6 @@
                         android:id="@+id/textIntDate"
                         android:layout_width="match_parent"
                         android:layout_height="50sp"
-                        android:gravity="center"
                         android:text="时间：2017年09月27日_22时22分22秒"
                         android:textSize="15sp" />
                     <LinearLayout
@@ -110,33 +108,10 @@
                     android:layout_height="10dp" />
 
                 <LinearLayout
-                    android:id="@+id/tabIllu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/leaf"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="35sp"
-                        android:layout_height="35sp"
-                        app:srcCompat="@drawable/intersec_mini" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="流量\n统计"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
-
-                <LinearLayout
                     android:id="@+id/tabDiag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/darkLeaf"
+                    android:background="@color/leaf"
                     android:orientation="vertical">
 
                     <ImageView
@@ -150,6 +125,53 @@
                         android:text="到达\n特性"
                         android:textSize="15sp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:id="@+id/tabTabl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkLeaf"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35sp"
+                        android:layout_height="35sp"
+                        app:srcCompat="@drawable/diagram" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="流量\n表格"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:id="@+id/tabIllu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkLeaf"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35sp"
+                        android:layout_height="35sp"
+                        app:srcCompat="@drawable/intersec_mini" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="流量\n图示"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -160,6 +182,535 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/frameDiag"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/intersecChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/frameTabl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="方向" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="进入" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="到达" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="北" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="左" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="直" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="右" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tablINL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablINN"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablINR"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tablIN"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:id="@+id/tablON"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="东" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="左" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="直" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="右" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tablIEL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablIEN"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablIER"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tablIE"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:id="@+id/tablOE"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="南" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="左" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="直" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="右" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tablISL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablISN"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablISR"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tablIS"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:id="@+id/tablOS"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="西" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="左" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="直" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="2dp"
+                                        android:text="右" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tablIWL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablIWN"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+
+                                    <TextView
+                                        android:id="@+id/tablIWR"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:paddingEnd="3dp"
+                                        android:paddingStart="3dp"
+                                        android:text="000" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tablIW"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+
+                                <LinearLayout
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black"
+                                    android:orientation="horizontal" />
+
+                                <TextView
+                                    android:id="@+id/tablOW"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingEnd="3dp"
+                                    android:paddingStart="3dp"
+                                    android:text="000" />
+                            </TableRow>
+
+                        </TableLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/frameIllu"
@@ -569,23 +1120,6 @@
                             </LinearLayout>
 
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/frameDiag"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="visible"
-                        android:background="@color/black">
-
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/intersecChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
-
 
                     </LinearLayout>
 

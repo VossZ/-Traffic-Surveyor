@@ -31,7 +31,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="交通调查分析仪\nTraffic Surveyor & Analyzer" />
+                    android:text="交通调查分析仪\nTraffic Surveyor and Analyzer" />
             </LinearLayout>
 
             <LinearLayout
