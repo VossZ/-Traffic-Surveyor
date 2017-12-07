@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,6 +22,7 @@ public class SplashActivity extends AppCompatActivity {
     private boolean permitted;
     private String[] perms;
     private LinearLayout splashFrame;
+    private long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SplashActivity.this, MainMenuActivity.class);
+                intent.setClass(SplashActivity.this, VidRecordActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,5 +59,18 @@ public class SplashActivity extends AppCompatActivity {
     public void onDestroy(){
         finish();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed(){
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            // ToastUtil.makeToastInBottom("再按一次退出应用", MainMyselfActivity);
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+            return;
+        } else {
+            finish();
+            this.onDestroy();
+        }
     }
 }

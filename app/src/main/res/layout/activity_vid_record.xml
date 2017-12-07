@@ -142,11 +142,20 @@
                         android:text="设施" />
 
                     <Button
+                        android:id="@+id/RepBtn"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="回放"
+                        android:textColor="@color/azure"/>
+
+                    <Button
                         android:id="@+id/note4Btn"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="特殊情况" />
+                        android:text="特殊情况"
+                        android:visibility="gone" />
 
 
                 </TableRow>

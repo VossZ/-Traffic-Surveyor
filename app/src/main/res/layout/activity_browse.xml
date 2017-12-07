@@ -26,9 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/spinner_dropdown_background"
-                android:text="正在显示：全部记录文件"
+                android:paddingBottom="8sp"
                 android:paddingStart="10sp"
-                android:paddingBottom="8sp"/>
+                android:text="正在显示：全部记录文件"
+                android:visibility="gone" />
 
             <ListView
                 android:id="@+id/browseList"
@@ -40,7 +41,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageButton
                     android:id="@+id/filter1Btn"
@@ -86,7 +88,7 @@
                     android:id="@+id/textL1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -94,7 +96,7 @@
                     android:id="@+id/textL2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -102,7 +104,7 @@
                     android:id="@+id/textL3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -110,9 +112,30 @@
                     android:id="@+id/textL4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="1"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="90sp"
+                        android:layout_height="18sp"
+                        android:text="起始位置"
+                        android:background="@drawable/small_title_back"  />
+
+                    <com.amap.api.maps.TextureMapView
+                        android:id="@+id/browseMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                    </com.amap.api.maps.TextureMapView>
+                </FrameLayout>
+
             </LinearLayout>
 
             <LinearLayout

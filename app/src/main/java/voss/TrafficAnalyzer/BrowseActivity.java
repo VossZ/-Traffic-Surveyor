@@ -20,6 +20,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +68,13 @@ public class BrowseActivity extends AppCompatActivity {
     private AlertDialog DelDialog;
     private AlertDialog.Builder DelDialogB;
     private SimpleDateFormat timeFormat;
+    private AMap BrowseMap;
+    private TextureMapView BrowseMapView;
+    private Marker BrowseMarker;
+    private MarkerOptions BrowseMarkerOption;
+    private LatLng Location;
+
+
 
 
 
@@ -78,6 +94,8 @@ public class BrowseActivity extends AppCompatActivity {
         preViewL3 = (TextView)findViewById(R.id.textL3);
         preViewL4 = (TextView)findViewById(R.id.textL4);
         preViewFilter = (TextView)findViewById(R.id.filterText);
+        BrowseMapView = (TextureMapView)findViewById(R.id.browseMap);
+
         nDirectory = new File(Environment.getExternalStorageDirectory() + "/Surveyor/");
         selectedPosition = -1;
         formatter = new SimpleDateFormat("HH:mm:ss");
@@ -88,6 +106,11 @@ public class BrowseActivity extends AppCompatActivity {
         nContents = nDirectory.listFiles();
 
         listTheView();
+
+        BrowseMapView.onCreate(savedInstanceState);
+        if(BrowseMap == null){
+            BrowseMap = BrowseMapView.getMap();
+        }
 
         BrowseTrueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,10 +186,14 @@ public class BrowseActivity extends AppCompatActivity {
                 if (fileChosen.endsWith(filterExt[1])) {
                     fileType = 1;
                     unpackVidJSON(new File(fileChosen));
-                } else if (fileChosen.endsWith(filterExt[2])){
+                }
+                /*
+                else if (fileChosen.endsWith(filterExt[2])){
                     fileType = 2;
                     unpackIntersecJSON(new File(fileChosen));
-                } else {
+                }
+                */
+                else {
                     Toast.makeText(BrowseActivity.this, "不支持的JSON文件！", Toast.LENGTH_SHORT).show();
                 }
                 showPreview(fileType);
@@ -211,7 +238,7 @@ public class BrowseActivity extends AppCompatActivity {
         for (int i = 0; i < nContents.length; i++) {
 
             if (nContents[i].getName().endsWith(filterExt[filter])) {
-                listItems.add(nContents[i].getName());
+                listItems.add(nContents[i].getName().substring(0, (int)nContents[i].length() - 11));
                 listTimes.add(timeFormat.format(nContents[i].lastModified()));
                 mContents = Arrays.copyOf(mContents, mContents.length + 1);
                 mContents[mContents.length - 1] = nContents[i];
@@ -248,15 +275,34 @@ public class BrowseActivity extends AppCompatActivity {
             Toast.makeText(this, "读取失败！", Toast.LENGTH_SHORT).show();
         }
         try {
+            boolean invalidlocation = true;
+            int pointchosen = 0;
             jsOBJ = new JSONObject(tempString);
             videoFile = new File(Environment.getExternalStorageDirectory() + jsOBJ.getString("VideoPath"));
             jsARY = jsOBJ.getJSONArray("MainTable");
             fileStart = jsARY.getJSONObject(0).getString("Time");
             fileEnd = jsARY.getJSONObject(jsARY.length()-1).getString("Time");
+            while (invalidlocation){
+                Location = new LatLng(jsARY.getJSONObject(pointchosen).getDouble("Lat"),
+                        jsARY.getJSONObject(pointchosen).getDouble("Lon"));
+                if (Location.equals(new LatLng(0,0))){
+                    pointchosen ++;
+                } else {
+                    invalidlocation = false;
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "JSON文件格式错误！", Toast.LENGTH_SHORT).show();
         }
+        if (BrowseMarker != null){
+            BrowseMarker.remove();
+        }
+        BrowseMarkerOption = new MarkerOptions().position(Location).draggable(false);
+        BrowseMarker = BrowseMap.addMarker(BrowseMarkerOption);
+        BrowseMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                new CameraPosition(Location,14,0,0)));
+
     }
 
 

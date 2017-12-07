@@ -102,7 +102,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private Camera.AutoFocusCallback mAutoFocusCallback=null;
     private SurfaceHolder mSurfaceHolder;
     private MediaRecorder mRecorder;
-    private Button Note1Btn,Note2Btn, Note3Btn, Note4Btn, Note5Btn;
+    private Button Note1Btn,Note2Btn, Note3Btn, Note4Btn, RepBtn;
     private List<Camera.Size> videoSizeList;
     private Chronometer nChronometer;
     private long exitTime;
@@ -142,7 +142,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
         Note2Btn = (Button) findViewById(R.id.note2Btn);
         Note3Btn = (Button) findViewById(R.id.note3Btn);
         Note4Btn = (Button) findViewById(R.id.note4Btn);
-        //Note5Btn = (Button) findViewById(R.id.note5Btn);
+        RepBtn = (Button) findViewById(R.id.RepBtn);
         nChronometer = (Chronometer) findViewById(R.id.chronometer);
         dirText = (TextView) findViewById(R.id.dirText);
         spdText = (TextView) findViewById(R.id.spdText);
@@ -328,7 +328,21 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             }
         });
 
-        Note4Btn.setOnClickListener(new View.OnClickListener() {
+        RepBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Started) {
+                    Intent intent = new Intent();
+                    intent.setClass(VidRecordActivity.this, BrowseActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(VidRecordActivity.this, "正在录制！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        /*Note4Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -362,7 +376,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             }
             }
         });
-
+*/
 
 
 
@@ -776,7 +790,16 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             Toast.makeText(this, "正在录制！", Toast.LENGTH_SHORT).show();
         } else {
             finish();
-            super.onBackPressed();
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                // ToastUtil.makeToastInBottom("再按一次退出应用", MainMyselfActivity);
+                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+                return;
+            } else {
+                finish();
+                this.onDestroy();
+                super.onBackPressed();
+            }
         }
 
     }
