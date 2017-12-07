@@ -128,27 +128,30 @@ public class VidReplayActivity extends AppCompatActivity {
             RepStartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!Playing) {
-                        if (Paused) {
-                            Paused = false;
-                            RepVidView.start();
-                            //RepVidView.resume();
-                        } else {
-                            VidDur = RepVidView.getDuration();
-                            RepVidView.start();
-                            initTimer();
+                    if (locList.size() == 0 || ChartEntries.size() == 0){
+                        Toast.makeText(VidReplayActivity.this, "路径长度错误！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (!Playing) {
+                            if (Paused) {
+                                Paused = false;
+                                RepVidView.start();
+                                //RepVidView.resume();
+                            } else {
+                                VidDur = RepVidView.getDuration();
+                                RepVidView.start();
+                                initTimer();
+                            }
+                            Playing = true;
+
+                            RepVidView.requestFocus();
+                            RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
+                        } else if (Playing) {
+                            Playing = false;
+                            RepVidView.pause();
+                            Paused = true;
+
+                            RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
                         }
-                        Playing = true;
-
-                        RepVidView.requestFocus();
-                        RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_pause));
-                    } else if (Playing){
-                        Playing = false;
-                        RepVidView.pause();
-                        Paused = true;
-
-                        RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
-
                     }
                 }
             });
@@ -254,7 +257,6 @@ public class VidReplayActivity extends AppCompatActivity {
             Toast.makeText(this, "未打开文件", Toast.LENGTH_SHORT).show();
             FileReadiness = false;
         } else {
-            Toast.makeText(this, "正在载入:  " + mLogFile, Toast.LENGTH_SHORT).show();
             FileReadiness = true;
             Log.e("file", mLogFile + "");
             Log.e("isThere", mLogFile.exists() + "");
@@ -592,21 +594,40 @@ public class VidReplayActivity extends AppCompatActivity {
         markerEntries  = new ArrayList<Entry>();
         try {
             tempObj = lineARY.getJSONObject(infoPos);
-            markerEntries.add(new Entry(tempObj.getInt("ID"), (float) tempObj.getDouble("Distance")));
+            if (tempObj != null && tempObj.getDouble("Distance")!=0 && tempObj.getInt("ID") != 0){
+                markerEntries.add(new Entry(tempObj.getInt("ID"), (float) tempObj.getDouble("Distance")));
+            }else {
+                markerEntries.add(new Entry(0,0));
+            }
+            markerDataSet = new LineDataSet(markerEntries,"");
+            markerDataSet.setCircleRadius(9);
+            markerDataSet.setCircleColor(R.color.black);
+            ChartDataSet.setDrawCircles(false);
+
+            ChartData.addDataSet(markerDataSet);
+            ChartPointed = true;
+            markerDataSet.notifyDataSetChanged();
+            ChartData.notifyDataChanged();
+            RepChart.notifyDataSetChanged();
+            RepChart.invalidate();
         } catch (JSONException e) {
+            Toast.makeText(this, "轨迹文件出错！", Toast.LENGTH_SHORT).show();
+
+            Playing = false;
+            Paused = true;
+
+            currentPts = 0;
+            infoPos = 0;
+
+            RepVidView.seekTo(0);
+            RepVidView.pause();
+
+            mSeekBar.setProgress(0);
+
+            RepStartBtn.setImageDrawable(getDrawable(android.R.drawable.ic_media_play));
+
             e.printStackTrace();
         }
-        markerDataSet = new LineDataSet(markerEntries,"");
-        markerDataSet.setCircleRadius(9);
-        markerDataSet.setCircleColor(R.color.black);
-        ChartDataSet.setDrawCircles(false);
-
-        ChartData.addDataSet(markerDataSet);
-        ChartPointed = true;
-        markerDataSet.notifyDataSetChanged();
-        ChartData.notifyDataChanged();
-        RepChart.notifyDataSetChanged();
-        RepChart.invalidate();
 
     }
 

@@ -117,7 +117,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     private android.app.AlertDialog ChangeLogDialog, ChangeLogHistDialog, infoDialog;
     private android.app.AlertDialog.Builder CLDBuilder, CLHDBuilder, infoDialogBuilder;
 
-    private SimpleDateFormat TimeForm = new SimpleDateFormat("yyyy年MM月dd日_HH时mm分ss秒");
+    private SimpleDateFormat TimeForm = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -798,7 +798,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             } else {
                 finish();
                 this.onDestroy();
-                super.onBackPressed();
             }
         }
 

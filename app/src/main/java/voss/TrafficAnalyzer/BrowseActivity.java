@@ -116,7 +116,8 @@ public class BrowseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (fileChosen != null) {
-                    Toast.makeText(BrowseActivity.this, "正在打开：" + fileChosen,
+                    Toast.makeText(BrowseActivity.this, "正在打开：" +
+                                    fileChosen.substring(0, fileChosen.length() - 10),
                             Toast.LENGTH_SHORT).show();
                     switch (fileType) {
                         case 1:
@@ -182,7 +183,6 @@ public class BrowseActivity extends AppCompatActivity {
                 selectedPosition = position;
                 myAdapter.notifyDataSetChanged();
                 fileChosen = mContents[position].getName();
-                Toast.makeText(BrowseActivity.this, "已选定" + fileChosen, Toast.LENGTH_SHORT).show();
                 if (fileChosen.endsWith(filterExt[1])) {
                     fileType = 1;
                     unpackVidJSON(new File(fileChosen));
@@ -238,7 +238,7 @@ public class BrowseActivity extends AppCompatActivity {
         for (int i = 0; i < nContents.length; i++) {
 
             if (nContents[i].getName().endsWith(filterExt[filter])) {
-                listItems.add(nContents[i].getName().substring(0, (int)nContents[i].length() - 11));
+                listItems.add(nContents[i].getName().substring(0, (int)nContents[i].getName().length() - 10));
                 listTimes.add(timeFormat.format(nContents[i].lastModified()));
                 mContents = Arrays.copyOf(mContents, mContents.length + 1);
                 mContents[mContents.length - 1] = nContents[i];

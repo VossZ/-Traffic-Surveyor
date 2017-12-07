@@ -38,10 +38,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:paddingStart="45dp"
                     android:paddingTop="40dp"
                     android:text="点击任意处进入"
                     android:textSize="30dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,15 +61,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:text="交通调查仪"
-                            android:textSize="50dp" />
+                            android:textSize="35dp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="20dp"
                             android:text="Traffic Surveyor"
-                            android:textSize="35dp" />
+                            android:textSize="25dp" />
                     </LinearLayout>
 
                     <TextView
@@ -78,7 +83,8 @@
                         android:paddingBottom="10dp"
                         android:paddingStart="40dp"
                         android:text="记录行车轨迹\n分析控制效果"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -92,6 +98,7 @@
             android:layout_weight="7"
             android:background="#DDDDDD"
             android:orientation="horizontal"
+            android:visibility="gone"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
@@ -115,10 +122,10 @@
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/vercode"
                     android:layout_gravity="center"
-                    android:gravity="center"/>
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/vercode" />
             </LinearLayout>
 
             <ImageView

@@ -63,14 +63,9 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            // ToastUtil.makeToastInBottom("再按一次退出应用", MainMyselfActivity);
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-            return;
-        } else {
+
             finish();
             this.onDestroy();
-        }
+
     }
 }
