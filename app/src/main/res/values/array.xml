@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="changeloghist">
-        <item>v 1.2.0a 修复了无法退出的问题</item>
-        <item>v 1.2.0  加入了路口调查功能，重新制作了界面</item>
-        <item>v.1.1.0  增加了更多标记类型</item>
-        <item>v.1.0.0  正式发布版</item>
-        <item>v.0.1.1  更新了标记图标与列表</item>
+        <item>v1.2.0 加入了路口调查功能，重新制作了界面</item>
+        <item>v.1.1.0 增加了更多标记类型</item>
+        <item>v.1.0.0 正式发布版</item>
+        <item>v.0.1.1 更新了标记图标与列表</item>
         <item>v.0.1.0  测试版</item>
 
     </string-array>

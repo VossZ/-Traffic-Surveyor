@@ -2,11 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
+    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "voss.TrafficAnalyzer"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 7
+        versionCode 5
         versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
