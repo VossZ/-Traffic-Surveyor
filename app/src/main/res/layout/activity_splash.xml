@@ -23,65 +23,66 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/imageView2"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/splash" />
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="end"
-                    android:text="交通调查仪"
-                    android:textColor="@color/cyan"
-                    android:paddingTop="25dp"
-                    android:paddingEnd="25dp"
-                    android:textSize="50dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="end"
-                    android:text="Traffic Surveyor"
-                    android:textColor="@color/cyan"
-                    android:paddingTop="85dp"
-                    android:paddingEnd="25dp"
-                    android:textSize="35dp"
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="bottom"
-                    android:text="记录行车轨迹\n分析控制效果"
-                    android:textColor="@color/cyan"
-                    android:textSize="20dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="40dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:paddingTop="40dp"
                     android:text="点击任意处进入"
-                    android:textColor="@color/leaf"
                     android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:paddingTop="40dp"/>
+                    android:textStyle="bold" />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:text="交通调查仪"
+                            android:textSize="50dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:text="Traffic Surveyor"
+                            android:textSize="35dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="bottom"
+                        android:paddingBottom="10dp"
+                        android:paddingStart="40dp"
+                        android:text="记录行车轨迹\n分析控制效果"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
