@@ -68,7 +68,6 @@
         <activity
             android:name=".IntersecReplayActivity"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".Browse0"></activity>
     </application>
 
 </manifest>

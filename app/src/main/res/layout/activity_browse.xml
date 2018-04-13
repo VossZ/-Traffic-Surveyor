@@ -113,6 +113,27 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.amap.api.maps.TextureMapView
+                        android:id="@+id/browseMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                    </com.amap.api.maps.TextureMapView>
+
+                    <TextView
+                        android:layout_width="90sp"
+                        android:layout_height="18sp"
+                        android:background="@drawable/small_title_back"
+                        android:text="起始位置" />
+
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout

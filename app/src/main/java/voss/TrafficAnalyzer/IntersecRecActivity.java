@@ -107,7 +107,7 @@ public class IntersecRecActivity extends AppCompatActivity {
         tmpObj = new JSONObject();
         outputObj = new JSONObject();
         folder = new File(Environment.getExternalStorageDirectory() + "/Surveyor/");
-        TimeForm = new SimpleDateFormat("yyyy年MM月dd日_HH时mm分ss秒");
+        TimeForm = new SimpleDateFormat("yyyyMMdd_HHmmss");
         DirectionUsed = null;
         directionCode = "N";
         Saved = true;
