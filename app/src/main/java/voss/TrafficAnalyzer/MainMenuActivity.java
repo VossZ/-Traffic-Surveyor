@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
 
 public class MainMenuActivity extends AppCompatActivity {
-    private LinearLayout VidRecBtn, IntersecRecBtn, ChangeLogBtn, BrowseBtn;
+    private LinearLayout VidRecBtn, IntersecRecBtn, BrowseBtn, AutoRecBtn;
+    private TextView ChangeLogBtn;
     private long exitTime;
     private AlertDialog ChangeLogDialog, ChangeLogHistDialog;
     private AlertDialog.Builder CLDBuilder, CLHDBuilder;
@@ -27,8 +29,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         VidRecBtn = (LinearLayout)findViewById(R.id.vidRecBtn);
         IntersecRecBtn = (LinearLayout)findViewById(R.id.intersecRecBtn);
-        ChangeLogBtn = (LinearLayout)findViewById(R.id.changeLogBtn);
         BrowseBtn = (LinearLayout)findViewById(R.id.dataRepBtn);
+        AutoRecBtn = (LinearLayout)findViewById(R.id.autoRecBtn);
+        ChangeLogBtn = (TextView)findViewById(R.id.changeLogBtn);
 
 
         VidRecBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,13 @@ public class MainMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainMenuActivity.this, BrowseActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        AutoRecBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainMenuActivity.this, "功能未完成", Toast.LENGTH_SHORT).show();
             }
         });
 

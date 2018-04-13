@@ -680,7 +680,7 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
             Folder.mkdirs();
         }
         FileName = new File(Folder + "/" + userFileName + ".vlog.json");
-        Toast.makeText(this, "已保存为：" + FileName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "已保存为：" + userFileName + ".vlog.json", Toast.LENGTH_SHORT).show();
         try {
             File file = VideoFile;
             VideoFile = new File(Folder + "/" + userFileName + ".vlog.mp4");
@@ -728,7 +728,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(VidRecordActivity.this, "初始化相机错误", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -839,7 +838,6 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
                 + "/Surveyor/Config/VidRec.cfg");
         if (!cfgFile.exists()) {
             resCfgValue = 0;
-            Toast.makeText(this, "视频质量默认为480P，请设置视频质量", Toast.LENGTH_LONG).show();
             vidQuality = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
             return;
         }
@@ -1010,57 +1008,14 @@ public class VidRecordActivity extends AppCompatActivity implements SurfaceHolde
     }
 
     public void prepareInfo(){
-        CLHDBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-        CLHDBuilder.setTitle("历史记录");
-        CLHDBuilder.setItems(getResources().getStringArray(R.array.changeloghist), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        CLHDBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        CLDBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
-        CLDBuilder.setTitle("更新内容");
-        CLDBuilder.setMessage(getResources().getString(R.string.changelognew));
-        CLDBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
-            }
-        });
-        CLDBuilder.setPositiveButton("历史更新", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ChangeLogHistDialog.show();
-            }
-        });
-
         infoDialogBuilder = new android.app.AlertDialog.Builder(VidRecordActivity.this);
         infoDialogBuilder.setTitle("说明");
         infoDialogBuilder.setCancelable(true);
         infoDialogBuilder.setItems(getResources().getStringArray(R.array.vidRecInfo), null);
-        infoDialogBuilder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(VidRecordActivity.this, "返回录制", Toast.LENGTH_SHORT).show();
-            }
-        });
-        infoDialogBuilder.setPositiveButton("更新内容", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ChangeLogDialog.show();
-            }
-        });
+        infoDialogBuilder.setNegativeButton("返回", null);
+
 
         infoDialogBuilder.setCancelable(true);
-        CLDBuilder.setCancelable(true);
-        CLHDBuilder.setCancelable(true);
 
 
 

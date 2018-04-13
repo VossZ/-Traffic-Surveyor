@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="changeloghist">
+        <item>v1.4.0 修复bug，更换了启动界面</item>
+        <item>v1.2.1 增加了路口调查的图表显示</item>
         <item>v 1.2.0a 修复了无法退出的问题</item>
         <item>v 1.2.0  加入了路口调查功能，重新制作了界面</item>
         <item>v.1.1.0  增加了更多标记类型</item>

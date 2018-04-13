@@ -48,6 +48,27 @@
                     android:gravity="center"
                     android:text="记录行车轨迹 评价控制效果\n调查路口流量 分析信号配时" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/darkLeaf"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/changeLogBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/toast_frame"
+                    android:backgroundTint="@color/cyan"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="What's New?"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <TableLayout
@@ -116,11 +137,34 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:id="@+id/dataRepBtn"
+                    android:id="@+id/autoRecBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/cirgreendark"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/ic_menu_help" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5sp"
+                        android:text="自动调查" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dataRepBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cirbluedark"
                     android:orientation="vertical">
 
                     <ImageView
@@ -141,28 +185,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/changeLogBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/cirbluedark"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_help" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="what's new"
-                        android:paddingBottom="5sp"
-                        android:gravity="center"/>
-
-                </LinearLayout>
             </TableRow>
 
         </TableLayout>
