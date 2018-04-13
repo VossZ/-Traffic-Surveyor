@@ -41,7 +41,6 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="landscape">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,9 +67,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".IntersecReplayActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".Browse0"></activity>
     </application>
 
 </manifest>
