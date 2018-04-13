@@ -1,0 +1,319 @@
+<!doctype html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style type="text/css">
+		#container{
+			height: 100%;
+			width: 100%;
+			margin: 0px;
+		}
+		#panel{
+			height: 100%;
+			margin: 0px;
+			width: 50%;
+			position: fixed;
+		}
+		#control{
+			height: 50px;
+			margin: 0px;
+			background: #49B3FF;
+		}
+		#videocontainer{
+			min-height: 320px;
+			min-width: 240px;
+			margin: 0px;
+			background: #000000;
+			height: 40%;
+			text-align: center;
+		} 
+		#graphcontainer{
+			background: #D1BC7C;
+			margin: 0px;
+			height: 45%;
+		}
+		#map{
+			height: 100%;
+			margin: 0px;
+			width: 50%;
+			position: absolute;
+			right: 0px;
+   		}
+		#video{
+			height: 100%;
+			margin: 0px auto;
+		}
+		#graph{
+			height: 100%;
+			width: 100%;
+		}
+		.buttons{
+			margin: 3px;
+			background: #F0FF00;
+		}
+    </style>
+    <title>视频回放</title>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=6a97b6a246fd5fe047c0f62cbc17155e"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/ui/1.0/main.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript">
+		var vidFile = "";
+		var pathFile = "";
+		var vidURL = "";
+		var pathJSON = "";
+		var tmpString = "";
+		var pathTable;
+		var markerTable;
+		var pathPoints = new Array();
+		var pathSimplifierIns;
+		var isVidReady = false;
+		var isPathReady = false;
+		var vid = document.getElementById("video");
+		var curPos = [0, 0];
+		var progress = 0;
+		var posMarker;
+		var graphTable = new Array();
+		var markers = new Array();
+		
+		var labelArray = ["人行横道", "汇流标线", "导流带", "禁停标线", "让行标线", "减速提示", "", "", "", "", "限速标志", "禁停标志", "场所标志", "禁止转向", "指路标志", "停车场", "", "", "", "", "信号灯", "摄像机", "警示灯", "车道灯", "信息屏", "测速站", "", "", "", "", "施工", "事故", "临时停车", "交通管制"];
+		
+		
+		function loaditems(PathSimplifier, SimpleMarker){
+			pathSimplifierIns = new PathSimplifier({
+				zIndex: 100,
+				map: map, //所属的地图实例
+				getPath: function(pathData, pathIndex) {
+					//返回轨迹数据中的节点坐标信息，[AMap.LngLat, AMap.LngLat...] 或者 [[lng|number,lat|number],...]
+					return pathData.path;
+				},
+				getHoverTitle: function(pathData, pathIndex, pointIndex) {
+					//返回鼠标悬停时显示的信息
+					if (pointIndex >= 0) {
+						//鼠标悬停在某个轨迹节点上
+						return pathData.name + '，点:' + pointIndex + '/' + pathData.path.length;
+					}
+					//鼠标悬停在节点之间的连线上
+					return pathData.name + '，点数量' + pathData.path.length;
+				},
+				renderOptions: {
+					//轨迹线的样式
+					pathLineStyle: {
+						strokeStyle: 'red',
+						lineWidth: 6,
+						dirArrowStyle: true
+					}
+				}
+			});
+			
+			posMarker = new SimpleMarker({
+				iconLabel: 'A',
+				iconTheme: 'default',
+				iconStyle: 'red',
+
+				map: map,
+				position: curPos
+			});
+		}
+		
+		function getSelectedVidFile(){  
+			vidFile = document.getElementById("vidFileSelect").files[0];
+			vidURL = URL.createObjectURL(vidFile);
+			document.getElementById("video").src = vidURL;
+			
+			isVidReady = true;
+		}
+		
+		function getSelectedPathFile(){  
+			pathFile = document.getElementById("pathFileSelect").files[0];
+			var reader = new FileReader();
+			reader.onload=function(){
+				tmpString = this.result;
+				pathJSON = JSON.parse(this.result);
+			}
+			reader.readAsText(pathFile);
+		}
+		
+		function drawPath(){
+			
+			pathPoints = new Array();
+			graphTable = new Array();
+			pathTable = pathJSON.MainTable; 
+			
+			for(var i = 0; i < pathTable.length; i++){
+				pathPoints.push([pathTable[i].Lon, pathTable[i].Lat]);
+				graphTable.push(pathTable[i].Distance);
+			}
+			
+			pathSimplifierIns.setData([{
+				name: 'path0',
+				path: pathPoints
+			}]);
+			drawMarkers();
+			drawGraph();
+		}
+		
+		function updateMark(){
+				progress = Math.floor(document.getElementById("video").currentTime / document.getElementById("video").duration * pathPoints.length);
+				curPos = pathPoints[progress];
+			
+				//document.getElementById("temp").innerHTML = curPos;
+				posMarker.setPosition(curPos);
+		}
+		
+		
+		
+	</script>  
+  </head>
+  <body>
+   <div id="container">
+		<div id="panel">
+			<div id="control">
+				<p>
+					<input id="vidFileSelect" type=file accept=".vlog.mp4">
+					<input value="载入视频文件" type="button" onclick="getSelectedVidFile()"/>
+					<input id="pathFileSelect" type=file accept=".vlog.json" onChange="getSelectedPathFile()">
+					<input value="载入路径文件" type="button" onclick="drawPath()"/>
+				</p>
+			</div>
+			<div id="videocontainer">
+				<video id="video" controls></video>
+			</div>
+			<div id = "graphcontainer">
+				<svg id="graph"></svg>
+				<p id = "temp"></p>
+		 	</div>
+		</div>
+		<div id="map"></div>
+    </div>
+    <script type="text/javascript">
+		//map
+        var map = new AMap.Map('map',{
+            resizeEnable: true,
+            zoom: 10,
+            center: [116.480983, 40.0958]
+        }); 
+		
+		AMap.plugin(['AMap.ToolBar','AMap.AdvancedInfoWindow'],function(){
+			var toolBar = new AMap.ToolBar();
+			map.addControl(toolBar);
+		});
+		AMapUI.loadUI(['misc/PathSimplifier', 'overlay/SimpleMarker'], 
+				function(PathSimplifier, SimpleMarker) {
+					if (!PathSimplifier.supportCanvas) {
+						alert('当前环境不支持 Canvas！');
+						return;
+					}
+					loaditems(PathSimplifier, SimpleMarker);
+		});
+		
+		
+		//graph
+		var graphWidth;
+		var graphHeight;
+		var maxValue;
+		var graph;
+		var scaleX;
+		var scaleY;
+		var axisX;
+		var axisY;
+		var line;
+		
+		function drawMarkers(){
+			if (markers != null){
+				map.remove(markers);
+				markers = new Array();
+			}
+			AMapUI.loadUI(['overlay/SimpleMarker'], 
+			function(SimpleMarker) {
+				markerTable = pathJSON.PointsTable;
+				
+				for(var i = 0; i < markerTable.length; i++){
+					marker = new SimpleMarker({
+						iconLabel:'',
+						iconTheme:'default',
+						iconStyle:'blue',
+
+						label: {
+							content: labelArray[markerTable[i].Type - 10],
+							offset: new AMap.Pixel(27, 25)
+						},
+
+						map:map,
+						position:[markerTable[i].Lon, markerTable[i].Lat]
+					})
+					markers.push(marker);
+				}
+			});
+		}
+		
+		function drawGraph(){
+			graphWidth = document.getElementById("graphcontainer").offsetWidth;
+			graphHeight = document.getElementById("graphcontainer").offsetHeight;
+			maxValue = graphTable[graphTable.length - 1];
+			
+			document.querySelector('svg').innerHTML = "";
+			
+			graph = d3.select("#graph").append("g");
+			
+			scaleX = d3.scaleLinear()
+				.domain([graphTable.length, 0])
+				.range([graphWidth - 50, 10]);
+			scaleY = d3.scaleLinear()
+				.domain([0,d3.max(graphTable,function(d){
+					return d;
+				})*1.1])
+				.range([graphHeight - 50, 10]);
+			axisX = d3.axisBottom(scaleX);
+			axisY = d3.axisRight(scaleY);
+			line = d3.line()
+				.x(function(d,i) {
+					return scaleX(i)
+				})
+				.y(function(d) {
+					return scaleY(d);
+				});
+			
+			graph.append("g")
+				.attr("class", "axis")
+				.attr("transform",  "translate(0," + (graphHeight - 50) + ")")
+				.call(axisX);
+			graph.append("g")
+				.attr("class", "axis")
+				.attr("transform",  "translate(" + (graphWidth - 50) + ",0)")
+				.call(axisY);
+			graph.append("path")
+				.attr("d", line(graphTable))
+				.attr("stroke","teal")
+				.attr("stroke-width",2)
+				.attr("fill","none");
+
+				
+			document.getElementById("temp").innerHTML = "";
+
+		}
+		setInterval(
+			function(){
+				updateMark();
+				
+				graph.selectAll("rect")
+					.remove();
+				graph.append("rect")
+					.attr("x", scaleX(progress))
+					.attr("y", 10)
+					.attr("width", 1)
+					.attr("height", graphHeight - 60)
+					.attr("fill", "red");
+				graph.append("rect")
+					.attr("x", 10)
+					.attr("y", scaleY(graphTable[progress]))
+					.attr("width", graphWidth - 60)
+					.attr("height", 1)
+					.attr("fill", "red");
+				
+			}
+			,1000);
+	
+    </script>
+  </body>
+</html>
